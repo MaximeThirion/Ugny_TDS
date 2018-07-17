@@ -23,7 +23,7 @@
             {% for utilisateur in listeUtilisateur %}
                 <tr>
                     <td class="align-middle">{{ utilisateur.id }}</td>
-                    <td class="align-middle"><img class="rounded" src="{{ asset('uploads/avatar/' ~ utilisateur.avatar) }}" height="40px" width="40px"></td>
+                    <td class="align-middle"><img class="rounded" src="{{ asset('upload/avatar/' ~ utilisateur.avatar) }}" height="40px" width="40px"></td>
                     <td class="align-middle">{{ utilisateur.nom }}</td>
                     <td class="align-middle">{{ utilisateur.prenom }}</td>
                     <td class="align-middle">{{ utilisateur.email }}</td>
