@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h1>Categorie</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Label</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for categorie in listeCategorie %}
+                <tr>
+                    <td class="align-middle">{{ categorie.id }}</td>
+                    <td class="align-middle">{{ categorie.label }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

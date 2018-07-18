@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
-    avatar_directory: '%kernel.project_dir%/public/upload/avatar'
+    avatar_directory: '%kernel.project_dir%/assets/upload/avatar'
+    article_directory: '%kernel.project_dir%/assets/article/image'
 
 services:
     # default configuration for services in *this* file

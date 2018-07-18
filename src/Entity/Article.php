@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -34,9 +35,12 @@ class Article
     private $contenu;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpg", "image/jpeg" })
      */
     private $image;
+
+    private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -54,7 +58,7 @@ class Article
     private $modifier_a;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", mappedBy="categorie_idcategorie")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", inversedBy="articles")
      */
     private $categories;
 
@@ -140,14 +144,26 @@ class Article
         return $this;
     }
 
-    public function getImage(): ?array
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(?array $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
@@ -178,5 +194,10 @@ class Article
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

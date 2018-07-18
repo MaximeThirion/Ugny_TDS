@@ -24,13 +24,14 @@ class Categorie
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Article", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="categories")
      */
-    private $categorie_idcategorie;
+    private $articles;
 
     public function __construct()
     {
         $this->categorie_idcategorie = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId()
@@ -71,6 +72,37 @@ class Categorie
     {
         if ($this->categorie_idcategorie->contains($categorieIdcategorie)) {
             $this->categorie_idcategorie->removeElement($categorieIdcategorie);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
         }
 
         return $this;

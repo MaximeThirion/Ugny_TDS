@@ -7,6 +7,7 @@ use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class AuthentificationController
@@ -19,16 +20,20 @@ class AuthentificationController extends Controller
     /**
      * @Route("/inscription", name="inscription")
      */
-    public function inscription(Request $request)
+    public function inscription(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $file = $form->get('file')->getData();
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
