@@ -22,7 +22,7 @@
             {% for planning in listePlanning %}
                 <tr>
                     <td class="align-middle">{{ planning.id }}</td>
-                    <td class="align-middle">{{ planning.date|date('d-m-Y H:i:s') }}</td>
+                    <td class="align-middle">{{ planning.date|date('d-m-Y') }}</td>
                     <td>
                         {% for utilisateur in planning.utilisateurs %}
                             <li>{{ utilisateur.prenom }} {{ utilisateur.nom }}</li>
