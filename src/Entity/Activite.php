@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActiviteRepository")
@@ -32,9 +35,12 @@ class Activite
     private $contenu;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpg", "image/jpeg" })
      */
     private $image;
+
+    private $file;
 
     /**
      * @ORM\Column(type="datetime")
@@ -42,15 +48,19 @@ class Activite
     private $creer_a;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $modifier_a;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Planning", inversedBy="activites")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\Planning", mappedBy="activite")
      */
-    private $planning_idplanning;
+    private $plannings;
+
+    public function __construct()
+    {
+        $this->plannings = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -93,14 +103,26 @@ class Activite
         return $this;
     }
 
-    public function getImage(): ?array
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(?array $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->image = $file;
 
         return $this;
     }
@@ -129,15 +151,39 @@ class Activite
         return $this;
     }
 
-    public function getPlanningIdplanning(): ?Planning
+    /**
+     * @return Collection|Planning[]
+     */
+    public function getPlannings(): Collection
     {
-        return $this->planning_idplanning;
+        return $this->plannings;
     }
 
-    public function setPlanningIdplanning(?Planning $planning_idplanning): self
+    public function addPlanning(Planning $planning): self
     {
-        $this->planning_idplanning = $planning_idplanning;
+        if (!$this->plannings->contains($planning)) {
+            $this->plannings[] = $planning;
+            $planning->setActivite($this);
+        }
 
         return $this;
+    }
+
+    public function removePlanning(Planning $planning): self
+    {
+        if ($this->plannings->contains($planning)) {
+            $this->plannings->removeElement($planning);
+            // set the owning side to null (unless already changed)
+            if ($planning->getActivite() === $this) {
+                $planning->setActivite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
+use App\Entity\Utilisateur;
+use App\Form\UtilisateurType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,18 +22,18 @@ class AuthentificationController extends Controller
      */
     public function inscription(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $user = new User();
+        $utilisateur = new Utilisateur();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UtilisateurType::class, $utilisateur);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user = $form->getData();
+            $utilisateur = $form->getData();
 
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+            $password = $passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword());
+            $utilisateur->setPassword($password);
 
             $file = $form->get('file')->getData();
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
@@ -42,11 +42,12 @@ class AuthentificationController extends Controller
                 $this->getParameter('avatar_directory'),
                 $fileName
             );
-            $user->setAvatar($fileName);
-            $user->setCreerA(new \DateTime());
+            $utilisateur->setAvatar($fileName);
+            $utilisateur->setCreerA(new \DateTime());
+            $utilisateur->setModifierA(new \DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $entityManager->persist($utilisateur);
             $entityManager->flush();
 
             return $this->redirectToRoute('utilisateur_liste');

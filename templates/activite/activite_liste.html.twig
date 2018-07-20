@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h1>Activités</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Sous-titre</th>
+                <th scope="col">Contenu</th>
+                <th scope="col">Image</th>
+                <th scope="col">Creer à</th>
+                <th scope="col">Modifier à</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activite in listeActivite %}
+                <tr>
+                    <td class="align-middle">{{ activite.id }}</td>
+                    <td class="align-middle">{{ activite.titre }}</td>
+                    <td class="align-middle">{{ activite.soustitre }}</td>
+                    <td class="align-middle">{{ activite.contenu }}</td>
+                    <td class="align-middle"><img class="rounded" src="{{ asset('build/activite/image/' ~ activite.image) }}" height="40px" width="40px"></td>
+                    <td class="align-middle">{{ activite.creera|date('d-m-Y H:i:s')}}</td>
+                    <td class="align-middle">{{ activite.modifiera|date('d-m-Y H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

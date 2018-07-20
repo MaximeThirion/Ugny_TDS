@@ -6,7 +6,11 @@
 parameters:
     locale: 'fr'
     avatar_directory: '%kernel.project_dir%/assets/upload/avatar'
+    avatar_directory_public: '%kernel.project_dir%/public/build/upload/avatar'
     article_directory: '%kernel.project_dir%/assets/article/image'
+    article_directory_public: '%kernel.project_dir%/public/build/article/image'
+    activite_directory: '%kernel.project_dir%/assets/activite/image'
+    activite_directory_public: '%kernel.project_dir%/public/build/activite/image'
 
 services:
     # default configuration for services in *this* file

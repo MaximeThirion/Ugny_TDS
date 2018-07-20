@@ -41,6 +41,9 @@ class ArticleController extends Controller
             $article->setImage($fileName);
 
             $article->setCreerA(new \DateTime());
+            $article->setModifierA(new \DateTime());
+
+            $article->setLienVideo('https://www.youtube.com/embed/'.$form->get('lien_video')->getData());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
@@ -54,6 +57,79 @@ class ArticleController extends Controller
             'title' => 'Article',
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/article/modifier/{id}", name="article_modifier")
+     */
+    public function article_modifier(Request $request, $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $lastFileName = $article->getImage();
+
+        $form = $this->createForm(ArticleType::class, $article);
+
+        $form->handleRequest($request);
+
+        $file = $form->get('file')->getData();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('file')->getData() === null) {
+
+                $article->setImage($lastFileName);
+            }
+            else {
+
+                if (file_exists($this->getParameter('article_directory').'/'.$lastFileName)) {
+                    unlink($this->getParameter('article_directory').'/'.$lastFileName);
+                    unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
+                }
+
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $article->setImage($fileName);
+
+                $file->move(
+                    $this->getParameter('article_directory'),
+                    $fileName
+                );
+            }
+            $article->setModifierA(new \DateTime());
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('article_liste');
+        }
+        return $this->render('article/article_modifier.html.twig', [
+            'title' => 'Modifier',
+            'id' => $id,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/article/supprimer/{id}", name="article_supprimer")
+     */
+    public function article_supprimer($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $lastFileName = $article->getImage();
+
+        if (file_exists($this->getParameter('article_directory').'/'.$lastFileName)) {
+            unlink($this->getParameter('article_directory').'/'.$lastFileName);
+            unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
+        }
+
+        $entityManager->remove($article);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('article_liste');
     }
 
     /**

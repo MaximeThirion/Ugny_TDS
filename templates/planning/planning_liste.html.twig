@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h1>Planning</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Date</th>
+                <th scope="col">Utilisateurs</th>
+                <th scope="col">Activité</th>
+                <th scope="col">Creer à</th>
+                <th scope="col">Modifier à</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for planning in listePlanning %}
+                <tr>
+                    <td class="align-middle">{{ planning.id }}</td>
+                    <td class="align-middle">{{ planning.date|date('d-m-Y H:i:s') }}</td>
+                    <td>
+                        {% for utilisateur in planning.utilisateurs %}
+                            <li>{{ utilisateur.prenom }} {{ utilisateur.nom }}</li>
+                        {% endfor %}
+                    </td>
+                    <td class="align-middle">{{ planning.activite }}</td>
+                    <td class="align-middle">{{ planning.creera|date('d-m-Y H:i:s')}}</td>
+                    <td class="align-middle">{{ planning.modifiera|date('d-m-Y H:i:s') }}</td>
+                    {#<td class="align-middle"><a class="btn btn-primary" href="{{ path('categorie_modifier', {'id': categorie.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('categorie_supprimer', {'id': categorie.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>#}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

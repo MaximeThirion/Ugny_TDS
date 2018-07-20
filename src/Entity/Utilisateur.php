@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class Utilisateur implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -70,18 +70,19 @@ class User implements UserInterface, \Serializable
     private $creer_a;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $modifier_a;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Planning", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Planning", inversedBy="utilisateurs")
      */
-    private $user_iduser;
+    private $plannings;
 
     public function __construct()
     {
-        $this->user_iduser = new ArrayCollection();
+        $this->utilisateur_id = new ArrayCollection();
+        $this->plannings = new ArrayCollection();
     }
 
     public function getId()
@@ -183,32 +184,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return Collection|Planning[]
-     */
-    public function getUserIduser(): Collection
-    {
-        return $this->user_iduser;
-    }
-
-    public function addUserIduser(Planning $userIduser): self
-    {
-        if (!$this->user_iduser->contains($userIduser)) {
-            $this->user_iduser[] = $userIduser;
-        }
-
-        return $this;
-    }
-
-    public function removeUserIduser(Planning $userIduser): self
-    {
-        if ($this->user_iduser->contains($userIduser)) {
-            $this->user_iduser->removeElement($userIduser);
-        }
-
-        return $this;
-    }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -296,6 +271,32 @@ class User implements UserInterface, \Serializable
     public function setUsername(string $username): self
     {
         $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Planning[]
+     */
+    public function getPlannings(): Collection
+    {
+        return $this->plannings;
+    }
+
+    public function addPlanning(Planning $planning): self
+    {
+        if (!$this->plannings->contains($planning)) {
+            $this->plannings[] = $planning;
+        }
+
+        return $this;
+    }
+
+    public function removePlanning(Planning $planning): self
+    {
+        if ($this->plannings->contains($planning)) {
+            $this->plannings->removeElement($planning);
+        }
+
         return $this;
     }
 }

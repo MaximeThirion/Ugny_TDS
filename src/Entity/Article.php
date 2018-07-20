@@ -53,7 +53,7 @@ class Article
     private $creer_a;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $modifier_a;
 
@@ -158,12 +158,12 @@ class Article
 
     public function getFile(): ?string
     {
-        return $this->file;
+        return $this->image;
     }
 
     public function setFile(?string $file): self
     {
-        $this->file = $file;
+        $this->image = $file;
 
         return $this;
     }

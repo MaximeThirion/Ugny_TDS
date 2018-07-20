@@ -29,24 +29,24 @@ class Planning
     private $creer_a;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $modifier_a;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activite", mappedBy="planning_idplanning")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", mappedBy="plannings")
      */
-    private $activites;
+    private $utilisateurs;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="user_iduser")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Activite", inversedBy="plannings")
      */
-    private $users;
+    private $activite;
 
     public function __construct()
     {
         $this->activites = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId()
@@ -91,61 +91,47 @@ class Planning
     }
 
     /**
-     * @return Collection|Activite[]
+     * @return Collection|Utilisateur[]
      */
-    public function getActivites(): Collection
+    public function getUtilisateurs(): Collection
     {
-        return $this->activites;
+        return $this->utilisateurs;
     }
 
-    public function addActivite(Activite $activite): self
+    public function addUtilisateur(Utilisateur $utilisateur): self
     {
-        if (!$this->activites->contains($activite)) {
-            $this->activites[] = $activite;
-            $activite->setPlanningIdplanning($this);
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs[] = $utilisateur;
+            $utilisateur->addPlanning($this);
         }
 
         return $this;
     }
 
-    public function removeActivite(Activite $activite): self
+    public function removeUtilisateur(Utilisateur $utilisateur): self
     {
-        if ($this->activites->contains($activite)) {
-            $this->activites->removeElement($activite);
-            // set the owning side to null (unless already changed)
-            if ($activite->getPlanningIdplanning() === $this) {
-                $activite->setPlanningIdplanning(null);
-            }
+        if ($this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->removeElement($utilisateur);
+            $utilisateur->removePlanning($this);
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getActivite(): ?Activite
     {
-        return $this->users;
+        return $this->activite;
     }
 
-    public function addUser(User $user): self
+    public function setActivite(?Activite $activite): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addUserIduser($this);
-        }
+        $this->activite = $activite;
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function __toString()
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removeUserIduser($this);
-        }
-
-        return $this;
+        return $this->id.'';
     }
 }
