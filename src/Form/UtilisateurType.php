@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,12 +18,13 @@ class UtilisateurType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, array('label' => 'Avatar', 'required' => false, 'data_class' => null))
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, array('attr' => array('placeholder' => 'Votre adresse mail')))
             ->add('password', PasswordType::class)
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
-            ->add('save', SubmitType::class, array('label' => 'Envoyer'))
+            ->add('confirm_password', PasswordType::class)
+            ->add('nom', TextType::class, array('attr' => array('placeholder' => 'Votre nom de famille')))
+            ->add('prenom', TextType::class, array('attr' => array('placeholder' => 'Votre prenom')))
+            ->add('telephone', TextType::class, array('attr' => array('placeholder' => 'Votre numero de téléphone')))
+            ->add('plannings')
         ;
     }
 

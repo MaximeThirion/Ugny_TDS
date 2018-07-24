@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{% block title %}Projet Symfony{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://bootswatch.com/4/lumen/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('build/css/index.css') }}">
@@ -20,7 +19,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="mr-auto">
-            {#{% if is_granted('ROLE_ADMIN') %}#}
+            {% if is_granted('ROLE_ADMIN') %}
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -51,8 +50,28 @@
                             <a class="dropdown-item" href="{{ path('categorie_liste') }}">Liste des catégories</a>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Activité
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('activite_creer') }}">Creer une activité</a>
+                            <a class="dropdown-item" href="{{ path('activite_liste') }}">Liste des activités</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Planning
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('planning_creer') }}">Ajouter un événement</a>
+                            <a class="dropdown-item" href="{{ path('planning_liste') }}">Planning</a>
+                        </div>
+                    </li>
                 </ul>
-            {#{% endif %}#}
+            {% endif %}
         </div>
         {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
             {#<div class="navbar-text mr-2">#}
@@ -63,15 +82,15 @@
             {#<input class="form-control mr-sm-2" name="input_rechercher" type="search" placeholder="Rechercher" aria-label="Rechercher">#}
             {#<button class="btn btn-primary my-2 my-sm-0" name="rechercher">Rechercher</button>#}
         {#</form>#}
-        {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
-            {#<div>#}
-                {#<a href="{{ path('logout') }}" class="btn btn-danger ml-2" name="deconnexion">Deconnexion</a>#}
-            {#</div>#}
-        {#{% else %}#}
-            {#<div>#}
-                {#<a href="{{ path('login') }}" class="btn btn-primary ml-2" name="connexion">Connexion</a>#}
-            {#</div>#}
-        {#{% endif %}#}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div>
+                <a href="{{ path('deconnexion') }}" class="btn btn-danger ml-2" name="deconnexion">Deconnexion</a>
+            </div>
+        {% else %}
+            <div>
+                <a href="{{ path('connexion') }}" class="btn btn-primary ml-2" name="connexion">Connexion</a>
+            </div>
+        {% endif %}
     </div>
 </nav>
 {% block body %}{% endblock %}

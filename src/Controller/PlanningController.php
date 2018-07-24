@@ -49,6 +49,49 @@ class PlanningController extends Controller
     }
 
     /**
+     * @Route("/planning/modifier/{id}", name="planning_modifier")
+     */
+    public function planning_modifier(Request $request, $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $planning = $entityManager->getRepository(Planning::class)->find($id);
+
+        $form = $this->createForm(PlanningType::class, $planning);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $planning->setModifierA(new \DateTime());
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('planning_liste');
+        }
+        return $this->render('planning/planning_modifier.html.twig', [
+            'title' => 'Planning',
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/planning/supprimer/{id}", name="planning_supprimer")
+     */
+    public function planning_supprimer($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $planning = $entityManager->getRepository(Planning::class)->find($id);
+
+        $planning->getActivite()->removePlanning($planning);
+
+        $entityManager->remove($planning);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('planning_liste');
+    }
+
+    /**
      * @Route("/planning/liste", name="planning_liste")
      */
     public function categorie_liste()

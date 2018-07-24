@@ -14,8 +14,6 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('articles')
-            ->add('save', SubmitType::class, array('label' => 'Envoyer'))
         ;
     }
 

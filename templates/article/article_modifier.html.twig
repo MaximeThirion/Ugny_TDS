@@ -6,7 +6,13 @@
     <main class="container">
         <h1>{{ title }}</h1>
         {{ form_start(form) }}
-        {{ form_widget(form) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.sous_titre) }}
+        {{ form_row(form.contenu) }}
+        {{ form_row(form.file) }}
+        {{ form_row(form.lien_video) }}
+        {{ form_row(form.categories) }}
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
         {{ form_end(form) }}
     </main>
 {% endblock %}

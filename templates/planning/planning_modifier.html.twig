@@ -6,8 +6,9 @@
     <main class="container">
         <h1>{{ title }}</h1>
         {{ form_start(form) }}
-            {{ form_row(form.label) }}
-            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        {{ form_row(form.date) }}
+        {{ form_row(form.activite) }}
+        <button type="submit" class="btn btn-primary">Creer l'article</button>
         {{ form_end(form) }}
     </main>
 {% endblock %}

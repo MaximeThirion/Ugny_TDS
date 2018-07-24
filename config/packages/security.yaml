@@ -4,13 +4,25 @@ security:
         App\Entity\Utilisateur:
             algorithm: bcrypt
     providers:
-        in_memory: { memory: ~ }
+        base_de_donnee:
+            entity:
+                class: App\Entity\Utilisateur
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: ~
+            pattern:    ^/
+            http_basic: ~
+            provider: base_de_donnee
+            form_login:
+                login_path: connexion
+                check_path: connexion
+            logout:
+                path:   /authentification/deconnexion
+                target: /
 
             # activate different ways to authenticate
 
@@ -23,5 +35,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profil, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_MODERATEUR
+        ROLE_MODERATEUR:       ROLE_USER

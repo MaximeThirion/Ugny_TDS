@@ -35,8 +35,30 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Les deux mots de passes doivent être identiques")
+     */
+    private $confirm_password;
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    /**
+     * @param mixed $confirm_password
+     */
+    public function setConfirmPassword($confirm_password): void
+    {
+        $this->confirm_password = $confirm_password;
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,6 +72,7 @@ class Utilisateur implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(pattern="/^(?!0)\d+$/", message="Ne doit contenir que des chiffres (0-9)")
      */
     private $telephone;
 

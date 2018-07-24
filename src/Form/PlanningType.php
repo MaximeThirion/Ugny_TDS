@@ -16,7 +16,6 @@ class PlanningType extends AbstractType
         $builder
             ->add('date', DateType::class, array('widget' => 'choice', 'format' => 'dd-MM-yyyy'))
             ->add('activite')
-            ->add('save', SubmitType::class, array('label' => 'Envoyer'))
         ;
     }
 

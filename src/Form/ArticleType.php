@@ -20,7 +20,6 @@ class ArticleType extends AbstractType
             ->add('file', FileType::class, array('label' => 'Image', 'required' => false, 'data_class' => null))
             ->add('lien_video')
             ->add('categories')
-            ->add('save', SubmitType::class, array('label' => 'Envoyer'))
         ;
     }
 
