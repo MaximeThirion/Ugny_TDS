@@ -94,7 +94,7 @@ class PlanningController extends Controller
     /**
      * @Route("/planning/liste", name="planning_liste")
      */
-    public function categorie_liste()
+    public function planning_liste()
     {
         $listePlanning = $this
             ->getDoctrine()
