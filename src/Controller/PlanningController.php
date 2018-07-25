@@ -8,16 +8,73 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * Class CategorieController
- * @package App\Controller
- * @Route("/admin")
- */
-
 class PlanningController extends Controller
 {
     /**
-     * @Route("/planning/creer", name="planning_creer")
+     * @Route("/", name="planning")
+     */
+    public function planning()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $planning = $entityManager->getRepository(Planning::class)->planning_accueil();
+
+        return $this->render('accueil/planning_accueil.html.twig', [
+            'title' => 'Accueil',
+            'planning' => $planning,
+        ]);
+    }
+
+    /**
+     * @Route("/participe/{id}", name="participe")
+     */
+    public function participe($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $utilisateur = $this->getUser();
+
+        $planning = $entityManager->getRepository(Planning::class)->find($id);
+
+        $utilisateur->addPlanning($planning);
+        $planning->addUtilisateur($utilisateur);
+
+        $this->addFlash(
+            'notification',
+            'Vous particitez desormais à l\'activité '.$planning->getActivite()->getTitre().' du '.$planning->getDate()->format('d-m-Y à H:i')
+        );
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('planning');
+    }
+
+    /**
+     * @Route("/participepas/{id}", name="participe_pas")
+     */
+    public function participe_pas($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $utilisateur = $this->getUser();
+
+        $planning = $entityManager->getRepository(Planning::class)->find($id);
+
+        $utilisateur->removePlanning($planning);
+        $planning->removeUtilisateur($utilisateur);
+
+        $this->addFlash(
+            'notification',
+            'Vous ne particitez plus à l\'activité '.$planning->getActivite()->getTitre().' du '.$planning->getDate()->format('d-m-Y à H:i')
+        );
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('planning');
+    }
+
+    /**
+     * @Route("/admin/planning/creer", name="planning_creer")
      */
     public function planning_creer(Request $request)
     {
@@ -49,7 +106,7 @@ class PlanningController extends Controller
     }
 
     /**
-     * @Route("/planning/modifier/{id}", name="planning_modifier")
+     * @Route("/admin/planning/modifier/{id}", name="planning_modifier")
      */
     public function planning_modifier(Request $request, $id)
     {
@@ -75,7 +132,7 @@ class PlanningController extends Controller
     }
 
     /**
-     * @Route("/planning/supprimer/{id}", name="planning_supprimer")
+     * @Route("/admin/planning/supprimer/{id}", name="planning_supprimer")
      */
     public function planning_supprimer($id)
     {
@@ -92,14 +149,14 @@ class PlanningController extends Controller
     }
 
     /**
-     * @Route("/planning/liste", name="planning_liste")
+     * @Route("/admin/planning/liste", name="planning_liste")
      */
-    public function categorie_liste()
+    public function planning_liste()
     {
         $listePlanning = $this
             ->getDoctrine()
             ->getRepository(Planning::class)
-            ->findAll();
+            ->findBy(array(), array('date' => 'ASC'));
 
         return $this->render('planning/planning_liste.html.twig', [
             'title' => 'Liste',

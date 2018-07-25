@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <main class="container">
+        <h1>Planning</h1>
+
+        {% for evenement in planning %}
+            <ul>
+                <li>{{ evenement.activite.titre }}</li>
+                <li>{{ evenement.activite.soustitre }}</li>
+                <li>{{ evenement.date|date('d-m-Y H:i') }}</li>
+
+                {% if evenement.utilisateurs|length == "0" %}
+                    <li>Il n'y a encore personne</li>
+                {% else %}
+                    <li>Nombre de participants : {{ evenement.utilisateurs|length }}</li>
+                {% endif %}
+
+                <li>{{ evenement.activite.titre }}</li>
+
+                {% for utilisateur in evenement.utilisateurs %}
+
+                        {% if utilisateur.id == app.user.id %}
+                            <a class="btn btn-primary" href="{{ path('participe_pas', {'id': evenement.id}) }}">Je ne participe pas</a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{{ path('participe', {'id': evenement.id}) }}">Je participe</a>
+                        {% endif %}
+
+                {% endfor %}
+            </ul>
+        {% endfor %}
+
+    </main>
+    {% endif %}
+{% endblock %}

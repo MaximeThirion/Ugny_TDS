@@ -10,24 +10,43 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Id</th>
                 <th scope="col">Date</th>
-                <th scope="col">Utilisateurs</th>
+                <th scope="col" colspan="2">Participants</th>
                 <th scope="col">Activité</th>
                 <th scope="col">Creer à</th>
                 <th scope="col">Modifier à</th>
+                <th scope="col">Editer</th>
             </tr>
             </thead>
             <tbody>
             {% for planning in listePlanning %}
                 <tr>
-                    <td class="align-middle">{{ planning.id }}</td>
-                    <td class="align-middle">{{ planning.date|date('d-m-Y') }}</td>
-                    <td>
-                        {% for utilisateur in planning.utilisateurs %}
-                            <li>{{ utilisateur.prenom }} {{ utilisateur.nom }}</li>
-                        {% endfor %}
+                    <td class="align-middle">
+                        {% if  planning.date|date('w') == '0' %}
+                            Dimanche <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% elseif planning.date|date('w') == '1' %}
+                            Lundi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% elseif planning.date|date('w') == '2' %}
+                            Mardi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% elseif planning.date|date('w') == '3' %}
+                            Mercredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% elseif planning.date|date('w') == '4' %}
+                            Jeudi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% elseif planning.date|date('w') == '5' %}
+                            Vendredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% elseif planning.date|date('w') == '6' %}
+                            Samedi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                        {% endif %}
                     </td>
+                    <td class="align-middle">{{ planning.utilisateurs|length }}</td>
+                    <td class="align-middle">
+                        <select class="form-control">
+                            {% for utilisateur in planning.utilisateurs %}
+                                <option>{{ utilisateur.prenom }} {{ utilisateur.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
                     <td class="align-middle">{{ planning.activite }}</td>
                     <td class="align-middle">{{ planning.creera|date('d-m-Y H:i:s')}}</td>
                     <td class="align-middle">{{ planning.modifiera|date('d-m-Y H:i:s') }}</td>

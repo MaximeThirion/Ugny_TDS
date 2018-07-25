@@ -24,7 +24,6 @@ class UtilisateurType extends AbstractType
             ->add('nom', TextType::class, array('attr' => array('placeholder' => 'Votre nom de famille')))
             ->add('prenom', TextType::class, array('attr' => array('placeholder' => 'Votre prenom')))
             ->add('telephone', TextType::class, array('attr' => array('placeholder' => 'Votre numero de téléphone')))
-            ->add('plannings')
         ;
     }
 
