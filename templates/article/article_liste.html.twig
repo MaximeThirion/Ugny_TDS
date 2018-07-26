@@ -17,6 +17,7 @@
                 <th scope="col">Image</th>
                 <th scope="col">Lien video</th>
                 <th scope="col">Categorie</th>
+                <th scope="col">En ligne</th>
                 <th scope="col">Creer à</th>
                 <th scope="col">Modifier à</th>
                 <th scope="col">Edit</th>
@@ -31,11 +32,16 @@
                     <td class="align-middle">{{ article.contenu }}</td>
                     <td class="align-middle"><img class="rounded" src="{{ asset('build/article/image/' ~ article.image) }}" height="40px" width="40px"></td>
                     <td class="align-middle"><iframe width="200" height="150" src="{{ article.lienvideo }}" frameborder="0" allowfullscreen></iframe></td>
-                    <td>
+                    <td class="align-middle">
                         {% for categorie in article.categories %}
                             <li>{{ categorie.label }}</li>
                         {% endfor %}
                     </td>
+                    {% if article.afficher == "0" %}
+                        <td class="align-middle"><a href="{{ path('article_afficher', {'id': article.id}) }}" class="btn btn-danger"><i class="fas fa-times" style="width: 15px;height: 15px"></i></a></td>
+                    {% else %}
+                        <td class="align-middle"><a href="{{ path('article_cacher', {'id': article.id}) }}" class="btn btn-success"><i class="fas fa-check" style="width: 15px;height: 15px"></i></a></td>
+                    {% endif %}
                     <td class="align-middle">{{ article.creera|date('d-m-Y H:i:s')}}</td>
                     <td class="align-middle">{{ article.modifiera|date('d-m-Y H:i:s') }}</td>
                     <td class="align-middle"><a class="btn btn-primary" href="{{ path('article_modifier', {'id': article.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('article_supprimer', {'id': article.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>

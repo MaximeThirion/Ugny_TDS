@@ -90,8 +90,6 @@ class AuthentificationController extends Controller
     {
         $utilisateur = $this->getDoctrine()->getRepository(Utilisateur::class)->find($id);
 
-        $message = 'Compte activé';
-
         if ($code === $this->createCode($utilisateur)) {
 
             $utilisateur->setActif(true);
@@ -100,12 +98,17 @@ class AuthentificationController extends Controller
             $entityManager->persist($utilisateur);
 
             $entityManager->flush();
+
+            $this->addFlash(
+                'compte',
+                'Compte activé');
         } else {
-            $message = 'Mauvais code d\'activation';
+
+            $this->addFlash(
+                'compte',
+                'Mauvais code d\'activation');
         }
-        return $this->render('authentification/activation.html.twig', [
-            'message' => $message,
-        ]);
+        return $this->redirectToRoute('planning');
     }
 
     /**

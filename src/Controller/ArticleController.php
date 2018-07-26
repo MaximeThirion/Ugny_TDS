@@ -190,4 +190,46 @@ class ArticleController extends Controller
             'listeArticle' => $listeArticle,
         ]);
     }
+
+    /**
+     * @Route("/article/afficher/{id}", name="article_afficher")
+     */
+    public function article_afficher($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $article->setAfficher(true);
+
+        $this->addFlash(
+            'notification',
+            'L\'article \''.$article->getTitre().'\' est en ligne'
+        );
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('article_liste');
+    }
+
+    /**
+     * @Route("/article/cacher/{id}", name="article_cacher")
+     */
+    public function article_cacher($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $article->setAfficher(false);
+
+        $this->addFlash(
+            'notification',
+            'L\'article \''.$article->getTitre().'\' n\'est plus en ligne'
+        );
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('article_liste');
+    }
 }

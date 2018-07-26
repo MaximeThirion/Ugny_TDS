@@ -12,7 +12,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">Projet UGNY_TDS</a>
+    <a class="navbar-brand" href="{{ path('planning') }}">Projet UGNY TDS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -73,29 +73,30 @@
                 </ul>
             {% endif %}
         </div>
-        {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
-            {#<div class="navbar-text mr-2">#}
-                {#<a href="{{ path('profile') }}">{{ app.user.firstname }} {{ app.user.lastname }}</a>#}
-            {#</div>#}
-        {#{% endif %}#}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div class="navbar-text mr-2">
+                <a href=""><span class="align-middle">{{ app.user.prenom }} {{ app.user.nom }}</span> <i class="fas fa-user-circle ml-1 align-middle picto_profil"></i></a>
+            </div>
+        {% endif %}
         {#<form class="form-inline my-2 my-lg-0" method="post" name="rechercher" action="{{ path('search') }}">#}
             {#<input class="form-control mr-sm-2" name="input_rechercher" type="search" placeholder="Rechercher" aria-label="Rechercher">#}
             {#<button class="btn btn-primary my-2 my-sm-0" name="rechercher">Rechercher</button>#}
         {#</form>#}
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <div>
                 <a href="{{ path('deconnexion') }}" class="btn btn-danger ml-2" name="deconnexion">Deconnexion</a>
             </div>
         {% else %}
             <div>
-                <a href="{{ path('connexion') }}" class="btn btn-primary ml-2" name="connexion">Connexion</a>
+                <a href="{{ path('inscription') }}" class="btn btn-primary ml-2" name="inscription">Inscription</a>
+                <a href="{{ path('connexion') }}" class="btn btn-primary ml-1" name="connexion">Connexion</a>
             </div>
         {% endif %}
     </div>
 </nav>
 {% for label, messages in app.flashes %}
     {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show flash-{{ label }}" role="alert">
+        <div class="alert alert-primary alert-dismissible text-center fade show message_flash flash-{{ label }}" role="alert">
             {{ message }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

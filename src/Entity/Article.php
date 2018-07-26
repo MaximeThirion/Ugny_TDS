@@ -62,6 +62,11 @@ class Article
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $afficher = false;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -199,5 +204,17 @@ class Article
     public function __toString()
     {
         return $this->titre;
+    }
+
+    public function getAfficher(): ?bool
+    {
+        return $this->afficher;
+    }
+
+    public function setAfficher(bool $afficher): self
+    {
+        $this->afficher = $afficher;
+
+        return $this;
     }
 }

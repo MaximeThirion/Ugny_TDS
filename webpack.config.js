@@ -18,6 +18,7 @@ Encore
     // uncomment to define the assets of the project
     //.addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/index', './assets/css/index.sass')
+    .addStyleEntry('css/planning', './assets/css/planning.sass')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

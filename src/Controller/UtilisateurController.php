@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
-use App\Form\UtilisateurType;
+use App\Form\UtilisateurModifierType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +28,7 @@ class UtilisateurController extends Controller
 
         $lastFileName = $utilisateur->getAvatar();
 
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createForm(UtilisateurModifierType::class, $utilisateur);
 
         $form->handleRequest($request);
 
