@@ -39,9 +39,11 @@ class ArticleController extends Controller
 
             // J'enregistre les données de l'input 'file' du formulaire dans la variable $file
             $file = $form->get('file')->getData();
+            $mp3 = $form->get('mp3')->getData();
 
             // Je génère un nom unique et j'y concat' l'extension d'origine du fichier uploadé
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $mp3Name = md5(uniqid()) . '.' . $mp3->guessExtension();
 
             // Je déplace le fichier uploadé dans le repertoire 'article_directory' et je lui donne le nom contenu par $fileName
             $file->move(
@@ -49,14 +51,18 @@ class ArticleController extends Controller
                 $fileName
             );
 
+            $mp3->move(
+                $this->getParameter('audio_directory'),
+                $mp3Name
+            );
+
             // J'attribue le chemin relatif de l'acitivité contenu dans '$fileName'
             $article->setImage($fileName);
+            $article->setAudio($mp3Name);
 
             // J'attribue la date de création et de modification à la date de l'instant + le lien de la vidéo
             $article->setCreerA(new \DateTime());
             $article->setModifierA(new \DateTime());
-
-            $article->setLienVideo('https://www.youtube.com/embed/'.$form->get('lien_video')->getData());
 
             // J'instancie entityManager
             $entityManager = $this->getDoctrine()->getManager();

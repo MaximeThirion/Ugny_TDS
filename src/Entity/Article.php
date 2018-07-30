@@ -36,16 +36,11 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "image/png", "image/jpg", "image/jpeg" })
+     * @Assert\File(mimeTypes={ "image/png" })
      */
     private $image;
 
     private $file;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lien_video;
 
     /**
      * @ORM\Column(type="datetime")
@@ -66,6 +61,14 @@ class Article
      * @ORM\Column(type="boolean")
      */
     private $afficher = false;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "audio/mpeg" }, mimeTypesMessage="Test")
+     */
+    private $audio;
+
+    private $mp3;
 
     public function __construct()
     {
@@ -109,18 +112,6 @@ class Article
     public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    public function getLienVideo(): ?string
-    {
-        return $this->lien_video;
-    }
-
-    public function setLienVideo(?string $lien_video): self
-    {
-        $this->lien_video = $lien_video;
 
         return $this;
     }
@@ -214,6 +205,30 @@ class Article
     public function setAfficher(bool $afficher): self
     {
         $this->afficher = $afficher;
+
+        return $this;
+    }
+
+    public function getAudio(): ?string
+    {
+        return $this->audio;
+    }
+
+    public function setAudio(?string $audio): self
+    {
+        $this->audio = $audio;
+
+        return $this;
+    }
+
+    public function getMp3(): ?string
+    {
+        return $this->audio;
+    }
+
+    public function setMp3(?string $mp3): self
+    {
+        $this->audio = $mp3;
 
         return $this;
     }

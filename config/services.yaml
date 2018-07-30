@@ -11,6 +11,8 @@ parameters:
     article_directory_public: '%kernel.project_dir%/public/build/article/image'
     activite_directory: '%kernel.project_dir%/assets/activite/image'
     activite_directory_public: '%kernel.project_dir%/public/build/activite/image'
+    audio_directory: '%kernel.project_dir%/assets/article/audio'
+    audio_directory_public: '%kernel.project_dir%/public/build/article/audio'
 
 services:
     # default configuration for services in *this* file

@@ -19,7 +19,7 @@ class ArticleType extends AbstractType
             ->add('sous_titre')
             ->add('contenu', TextareaType::class, array('attr' => array('id' => 'editor test')))
             ->add('file', FileType::class, array('label' => 'Image', 'required' => false, 'data_class' => null))
-            ->add('lien_video')
+            ->add('mp3', FileType::class, array('label' => 'Version audio', 'required' => false, 'data_class' => null))
             ->add('categories')
         ;
     }

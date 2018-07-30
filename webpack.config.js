@@ -16,7 +16,6 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    //.addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/index', './assets/css/index.sass')
     .addStyleEntry('css/planning', './assets/css/planning.sass')
 
@@ -35,6 +34,10 @@ Encore
 
     .addPlugin(new CopyWebpackPlugin([
         { from: './assets/article/image', to: 'article/image' }
+    ]))
+
+    .addPlugin(new CopyWebpackPlugin([
+        { from: './assets/article/audio', to: 'article/audio' }
     ]))
 
     .addPlugin(new CopyWebpackPlugin([

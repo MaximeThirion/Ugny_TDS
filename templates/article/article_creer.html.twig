@@ -12,7 +12,7 @@
             <div id="toolbar-container"></div>
             {{ form_row(form.contenu, {'id': 'editor1'}) }}
             {{ form_row(form.file) }}
-            {{ form_row(form.lien_video) }}
+            {{ form_row(form.mp3) }}
             {{ form_row(form.categories) }}
             <button type="submit" class="btn btn-primary">Creer l'article</button>
         {{ form_end(form) }}
@@ -23,8 +23,8 @@
             toolbar: [
                 { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste'] },
                 { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },
-                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-                { name: 'insert', items: [ 'Table', 'Smiley' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align'], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+                { name: 'insert', items: [ 'Table', 'Smiley', 'SpecialChar' ] },
                 '/',
                 { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
                 { name: 'colors', items: [ 'TextColor', 'BGColor' ] },

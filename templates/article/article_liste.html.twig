@@ -14,7 +14,7 @@
                 <th scope="col">Titre</th>
                 <th scope="col">Sous-titre</th>
                 <th scope="col">Image</th>
-                <th scope="col">Lien video</th>
+                <th scope="col">Audio</th>
                 <th scope="col">Categorie</th>
                 <th scope="col">En ligne</th>
                 <th scope="col">Creer à</th>
@@ -29,7 +29,11 @@
                     <td class="align-middle">{{ article.titre }}</td>
                     <td class="align-middle">{{ article.soustitre }}</td>
                     <td class="align-middle"><img class="rounded" src="{{ asset('build/article/image/' ~ article.image) }}" height="40px" width="40px"></td>
-                    <td class="align-middle"><iframe width="200" height="150" src="{{ article.lienvideo }}" frameborder="0" allowfullscreen></iframe></td>
+                    <td class="align-middle">
+                        <audio controls="controls">
+                            <source src="{{ asset('build/article/audio/' ~ article.audio) }}" />
+                        </audio>
+                    </td>
                     <td class="align-middle">
                         {% for categorie in article.categories %}
                             <li>{{ categorie.label }}</li>
