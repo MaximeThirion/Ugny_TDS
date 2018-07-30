@@ -3,16 +3,34 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
+    <script src="//cdn.ckeditor.com/4.10.0/full/ckeditor.js"></script>
     <main class="container">
         <h1>{{ title }}</h1>
         {{ form_start(form) }}
             {{ form_row(form.titre) }}
             {{ form_row(form.sous_titre) }}
-            {{ form_row(form.contenu) }}
+            <div id="toolbar-container"></div>
+            {{ form_row(form.contenu, {'id': 'editor1'}) }}
             {{ form_row(form.file) }}
             {{ form_row(form.lien_video) }}
             {{ form_row(form.categories) }}
             <button type="submit" class="btn btn-primary">Creer l'article</button>
         {{ form_end(form) }}
     </main>
+    <script>
+        CKEDITOR.replace( 'editor1', {
+            language: 'fr',
+            toolbar: [
+                { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste'] },
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+                { name: 'insert', items: [ 'Table', 'Smiley' ] },
+                '/',
+                { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
+                { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+                { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+                { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] }
+            ]
+        });
+    </script>
 {% endblock %}

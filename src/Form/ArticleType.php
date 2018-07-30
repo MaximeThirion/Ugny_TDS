@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +17,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre')
             ->add('sous_titre')
-            ->add('contenu')
+            ->add('contenu', TextareaType::class, array('attr' => array('id' => 'editor test')))
             ->add('file', FileType::class, array('label' => 'Image', 'required' => false, 'data_class' => null))
             ->add('lien_video')
             ->add('categories')

@@ -13,7 +13,6 @@
                 <th scope="col">Id</th>
                 <th scope="col">Titre</th>
                 <th scope="col">Sous-titre</th>
-                <th scope="col">Contenu</th>
                 <th scope="col">Image</th>
                 <th scope="col">Lien video</th>
                 <th scope="col">Categorie</th>
@@ -29,7 +28,6 @@
                     <td class="align-middle">{{ article.id }}</td>
                     <td class="align-middle">{{ article.titre }}</td>
                     <td class="align-middle">{{ article.soustitre }}</td>
-                    <td class="align-middle">{{ article.contenu }}</td>
                     <td class="align-middle"><img class="rounded" src="{{ asset('build/article/image/' ~ article.image) }}" height="40px" width="40px"></td>
                     <td class="align-middle"><iframe width="200" height="150" src="{{ article.lienvideo }}" frameborder="0" allowfullscreen></iframe></td>
                     <td class="align-middle">
