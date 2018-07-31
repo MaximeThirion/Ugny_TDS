@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('build/css/lecteur_mp3.css') }}" />
+    <script src="{{ asset('build/js/lecteur_mp3.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {% if article.afficher == true %}
+    <main class="container">
+        {% for categorie in article.categories %}
+            <h4>{{ categorie.label }}</h4>
+        {% endfor %}
+        {{ article.contenu|raw }}
+        <div class="row">
+            <div class="col-3"></div>
+            <div id="carouselExampleIndicators" class="carousel slide col-6" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{ asset('build/article/image/' ~ article.image) }}" alt="First slide">
+                    </div>
+                    {#{% set premier = true %}#}
+
+                    {#{% for image in article.images %}#}
+                    {#<div class="carousel-item {{ premier ? ' active' : '' }}">#}
+                    {#<img class="d-block w-100" src="{{ asset('build/article/image/' ~ image.url) }}" alt="">#}
+                    {#</div>#}
+                    {#{% set premier = false %}#}
+                    {#{% endfor %}#}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <h3>Version Audio</h3>
+        <audio id="audiotrack" preload="auto">
+            <source src="{{ asset('build/article/audio/' ~ article.audio) }}">
+        </audio>
+        <div class="wrapper">
+            <div id="player">
+                <div id="track">
+                    <div id="progress"></div>
+                </div>
+                <div id="controls">
+                    <div class="icon" id="play"></div>
+                    <div class="icon" id="pause"></div>
+                    <div class="icon" id="stop"></div>
+                    <div class="icon" id="mute"></div>
+                    <div id="volume">
+                        <div id="level"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endif %}
+{% endblock %}

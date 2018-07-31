@@ -8,16 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * Class ArticleController
- * @package App\Controller
- * @Route("/admin")
- */
-
 class ArticleController extends Controller
 {
     /**
-     * @Route("/article/creer", name="article_creer")
+     * @Route("/admin/article/creer", name="article_creer")
      */
     // Fonction qui permet de créer un article
     public function article_creer(Request $request)
@@ -82,7 +76,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/article/modifier/{id}", name="article_modifier")
+     * @Route("/admin/article/modifier/{id}", name="article_modifier")
      */
 
     // Fonction qui permet de modifier un article
@@ -96,6 +90,7 @@ class ArticleController extends Controller
 
         // J'enregistre l'ancien nom (au cas il existerait deja)
         $lastFileName = $article->getImage();
+        $lastMp3Name = $article->getAudio();
 
         // J'instancie le formulaire avec ArticleType (form builder)
         $form = $this->createForm(ArticleType::class, $article);
@@ -104,6 +99,7 @@ class ArticleController extends Controller
         $form->handleRequest($request);
         // J'enregistre les données de l'input 'file' du formulaire dans la variable $file
         $file = $form->get('file')->getData();
+        $mp3 = $form->get('mp3')->getData();
 
         // Si le formulaire est soumit et valide, alors
         if ($form->isSubmitted() && $form->isValid()) {
@@ -111,6 +107,11 @@ class ArticleController extends Controller
             if ($form->get('file')->getData() === null) {
                 // J'attribue l'image de l'article à l'ancien nom
                 $article->setImage($lastFileName);
+            }
+
+            if ($form->get('mp3')->getData() === null) {
+                // J'attribue l'image de l'article à l'ancien nom
+                $article->setAudio($lastMp3Name);
             }
             // sinon
             else {
@@ -120,14 +121,27 @@ class ArticleController extends Controller
                     unlink($this->getParameter('article_directory').'/'.$lastFileName);
                     unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
                 }
+                if (file_exists($this->getParameter('audio_directory').'/'.$lastMp3Name)) {
+                    // Alors on les supprime
+                    unlink($this->getParameter('audio_directory').'/'.$lastMp3Name);
+                    unlink($this->getParameter('audio_directory_public').'/'.$lastMp3Name);
+                }
                 // Je génère un nom unique et j'y concat' l'extension d'origine du fichier uploadé
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $article->setImage($fileName);
+
+                $mp3Name = md5(uniqid()) . '.' . $mp3->guessExtension();
+                $article->setAudio($mp3Name);
 
                 // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
                 $file->move(
                     $this->getParameter('article_directory'),
                     $fileName
+                );
+
+                $mp3->move(
+                    $this->getParameter('audio_directory'),
+                    $mp3Name
                 );
             }
 
@@ -148,7 +162,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/article/supprimer/{id}", name="article_supprimer")
+     * @Route("/admin/article/supprimer/{id}", name="article_supprimer")
      */
 
     // Fonction qui permet de supprimer un article
@@ -178,7 +192,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/article/liste", name="article_liste")
+     * @Route("/admin/article/liste", name="article_liste")
      */
 
     // Fonction qi permet de lister les articles
@@ -198,7 +212,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/article/afficher/{id}", name="article_afficher")
+     * @Route("/admin/article/afficher/{id}", name="article_afficher")
      */
     public function article_afficher($id)
     {
@@ -219,7 +233,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/article/cacher/{id}", name="article_cacher")
+     * @Route("/admin/article/cacher/{id}", name="article_cacher")
      */
     public function article_cacher($id)
     {
@@ -237,5 +251,19 @@ class ArticleController extends Controller
         $entityManager->flush();
 
         return $this->redirectToRoute('article_liste');
+    }
+
+    /**
+     * @Route("/article/{id}", name="article_page")
+     */
+    public function article_page($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $article = $entityManager->getRepository(Article::class)->find($id);
+
+        return $this->render('article/article_page.html.twig', [
+            'article' => $article,
+        ]);
     }
 }

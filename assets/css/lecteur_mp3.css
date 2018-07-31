@@ -1,0 +1,170 @@
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.wrapper {
+    width: 80%;
+    max-width: 580px;
+    margin: auto;
+}
+
+#player {
+    background: #4DB6AC;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#track {
+    width: 100%;
+    height: 6px;
+    background: #26A69A;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background: #009688;
+}
+
+#controls {
+    padding: 32px 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#controls > div {
+    vertical-align: middle;
+}
+
+.icon {
+    display: inline-block;
+    position: relative;
+    margin: 4px 12px;
+    cursor: pointer;
+}
+
+/* Buttons (Play) */
+#play {
+    position: relative;
+    border-style: solid;
+    border-width: 10px 0 10px 16px;
+    border-color: transparent transparent transparent #26A69A;
+}
+
+#play:hover {
+    border-color: transparent transparent transparent #009688;
+}
+
+/* Buttons (Pause) */
+#pause {
+    position: relative;
+    width: 16px;
+    height: 18px;
+}
+
+#pause:before {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 18px;
+    top: 0;
+    left: 0;
+    background: #26A69A;
+}
+
+#pause:after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 18px;
+    top: 0;
+    right: 0;
+    background: #26A69A;
+}
+
+#pause:hover:before,
+#pause:hover:after {
+    background: #009688;
+}
+
+/* Buttons (stop) */
+#stop {
+    width: 18px;
+    height: 18px;
+    background: #26A69A;
+}
+
+#stop:hover {
+    background: #009688;
+}
+
+/* Buttons (Mute) */
+#mute {
+    position: relative;
+    border-style: solid;
+    border-width: 10px 14px 10px 0;
+    border-color: transparent #26A69A transparent transparent;
+}
+
+#mute:after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 50%;
+    margin-top: -4px;
+    right: -8px;
+    background: #26A69A;
+}
+
+#mute:before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 8px;
+    top: 50%;
+    margin-top: -4px;
+    left: 16px;
+    background: #26A69A;
+    border-radius: 0 100% 100% 0;
+}
+
+#mute:hover,
+.mute {
+    border-color: transparent #009688 transparent transparent !important;
+}
+
+#mute:hover:after,
+.mute:after {
+    background: #009688 !important;
+}
+
+#mute:hover:before,
+.mute:before {
+    content: none !important;
+}
+
+/* Buttons (Volume) */
+#volume {
+    display: inline-block;
+    width: 60px;
+    height: 6px;
+    margin-right: -60px;
+    background: #26A69A;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+#level {
+    width: 100%;
+    height: 100%;
+    background: #009688;
+}
+
+#controls:hover #volume {
+    visibility: visible;
+}

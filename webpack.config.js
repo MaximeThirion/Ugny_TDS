@@ -18,6 +18,8 @@ Encore
     // uncomment to define the assets of the project
     .addStyleEntry('css/index', './assets/css/index.sass')
     .addStyleEntry('css/planning', './assets/css/planning.sass')
+    .addStyleEntry('css/lecteur_mp3', './assets/css/lecteur_mp3.css')
+    .addEntry('js/lecteur_mp3', './assets/js/lecteur_mp3.js')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

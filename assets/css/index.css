@@ -1,6 +1,9 @@
 body {
   margin-top: 56px; }
 
+main {
+  padding-top: 48px; }
+
 .message_flash {
   margin-bottom: 0; }
 
