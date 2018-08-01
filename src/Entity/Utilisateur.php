@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
 class Utilisateur implements UserInterface, \Serializable
 {
@@ -34,6 +34,11 @@ class Utilisateur implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @Assert\EqualTo(propertyPath="email", message="Les deux adresses renseignées ne correspondent pas")
+     */
+    private $confirm_email;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
      */
@@ -44,20 +49,24 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $confirm_password;
 
-    /**
-     * @return mixed
-     */
     public function getConfirmPassword()
     {
         return $this->confirm_password;
     }
 
-    /**
-     * @param mixed $confirm_password
-     */
     public function setConfirmPassword($confirm_password): void
     {
         $this->confirm_password = $confirm_password;
+    }
+
+    public function getConfirmEmail()
+    {
+        return $this->confirm_email;
+    }
+
+    public function setConfirmEmail($confirm_email): void
+    {
+        $this->confirm_email = $confirm_email;
     }
 
     /**

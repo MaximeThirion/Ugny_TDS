@@ -18,7 +18,8 @@ class UtilisateurType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, array('label' => 'Avatar', 'required' => false, 'data_class' => null))
-            ->add('email', EmailType::class, array('attr' => array('placeholder' => 'Votre adresse mail')))
+            ->add('email', EmailType::class, array('attr' => array('placeholder' => 'adresse@exemple.com')))
+            ->add('confirm_email', EmailType::class, array('attr' => array('placeholder' => 'adresse@exemple.com')))
             ->add('password', PasswordType::class)
             ->add('confirm_password', PasswordType::class)
             ->add('nom', TextType::class, array('attr' => array('placeholder' => 'Votre nom de famille')))

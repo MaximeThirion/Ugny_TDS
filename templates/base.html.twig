@@ -111,7 +111,7 @@
     </div>
 </nav>
 {% if getMessage('information') %}
-    <div class="alert alert-primary alert-dismissible text-center fade show message_flash" role="alert">
+    <div class="alert alert-danger alert-dismissible text-center fade show message_flash" role="alert">
         {% for message in getMessage('information') %}
             <p>{{ message.message }}</p>
         {% endfor %}
