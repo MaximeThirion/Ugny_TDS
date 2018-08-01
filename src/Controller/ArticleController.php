@@ -175,12 +175,19 @@ class ArticleController extends Controller
         $article = $entityManager->getRepository(Article::class)->find($id);
         // J'enregistre l'ancien nom (au cas il existerait deja)
         $lastFileName = $article->getImage();
+        $lastMp3Name = $article->getAudio();
 
         // Si l'ancien nom existe déjà dans le repertoire
         if (file_exists($this->getParameter('article_directory').'/'.$lastFileName)) {
             // alors supprimes du directory
             unlink($this->getParameter('article_directory').'/'.$lastFileName);
             unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
+        }
+
+        if (file_exists($this->getParameter('audio_directory').'/'.$lastMp3Name)) {
+            // Alors on les supprime
+            unlink($this->getParameter('audio_directory').'/'.$lastMp3Name);
+            unlink($this->getParameter('audio_directory_public').'/'.$lastMp3Name);
         }
         // Je supprime l'article de la base de donnée
         $entityManager->remove($article);

@@ -1,4 +1,6 @@
 {
+    "name": "Projet UGNY_TDS",
+    "description": "Projet de stage",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -22,7 +24,8 @@
         "symfony/validator": "^4.1",
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "^1.0",
-        "symfony/yaml": "^4.1"
+        "symfony/yaml": "^4.1",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "symfony/debug-pack": "*",

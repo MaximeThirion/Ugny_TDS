@@ -6,6 +6,8 @@ main {
 
 .message_flash {
   margin-bottom: 0; }
+  .message_flash p {
+    margin-bottom: 0; }
 
 .picto_profil {
   font-size: 1.5em; }

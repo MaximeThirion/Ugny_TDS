@@ -48,6 +48,7 @@ class AuthentificationController extends Controller
             $utilisateur->setAvatar($fileName);
             $utilisateur->setCreerA(new \DateTime());
             $utilisateur->setModifierA(new \DateTime());
+//            $utilisateur->setRoles(['ROLE_ADMIN']);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($utilisateur);

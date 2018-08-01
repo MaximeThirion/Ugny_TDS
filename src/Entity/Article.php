@@ -43,14 +43,12 @@ class Article
     private $file;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "audio/mpeg" }, mimeTypesMessage="Test")
      */
-    private $creer_a;
+    private $audio;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $modifier_a;
+    private $mp3;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", inversedBy="articles")
@@ -63,12 +61,14 @@ class Article
     private $afficher = false;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "audio/mpeg" }, mimeTypesMessage="Test")
+     * @ORM\Column(type="datetime")
      */
-    private $audio;
+    private $creer_a;
 
-    private $mp3;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $modifier_a;
 
     public function __construct()
     {
