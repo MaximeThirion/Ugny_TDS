@@ -27,7 +27,7 @@ class PlanningRepository extends ServiceEntityRepository
             'SELECT p
         FROM App\Entity\Planning p
         WHERE p.date >= :maintenant
-        ORDER BY p.id ASC'
+        ORDER BY p.date ASC'
         )->setMaxResults(5)
          ->setParameter('maintenant', new \DateTime());
 
