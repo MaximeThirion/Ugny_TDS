@@ -7,13 +7,14 @@
 .wrapper {
     width: 80%;
     max-width: 580px;
-    margin: auto;
+    margin: 50px auto;
 }
 
 #player {
     background: #4DB6AC;
     border-radius: 8px;
     overflow: hidden;
+    margin-bottom: 170px;
 }
 
 #track {

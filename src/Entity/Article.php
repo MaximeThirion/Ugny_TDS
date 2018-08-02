@@ -36,7 +36,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "image/png" })
+     * @Assert\File(mimeTypes={ "image/*" })
      */
     private $image;
 

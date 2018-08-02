@@ -3,12 +3,12 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-    <main class="container">
+    <section class="container">
         <h1>{{ title }}</h1>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
         {{ form_end(form) }}
-    </main>
+    </section>
 {% endblock %}

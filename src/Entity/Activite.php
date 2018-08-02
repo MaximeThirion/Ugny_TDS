@@ -36,7 +36,7 @@ class Activite
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "image/png", "image/jpg", "image/jpeg" })
+     * @Assert\File(mimeTypes={ "image/*" })
      */
     private $image;
 

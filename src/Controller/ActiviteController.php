@@ -76,6 +76,86 @@ class ActiviteController extends Controller
     }
 
     /**
+     * @Route("/admin/activite/modifier/{id}", name="activite_modifier")
+     */
+
+    // Fonction qui permet de modifier un article
+    public function activite_modifier(Request $request, $id)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $activite = $entityManager->getRepository(Activite::class)->find($id);
+
+        $lastFileName = $activite->getImage();
+
+        $form = $this->createForm(ActiviteType::class, $activite);
+
+        $form->handleRequest($request);
+
+        $file = $form->get('file')->getData();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('file')->getData() === null) {
+
+                $activite->setImage($lastFileName);
+            }
+            else {
+
+                if (file_exists($this->getParameter('activite_directory').'/'.$lastFileName)) {
+
+                    unlink($this->getParameter('activite_directory').'/'.$lastFileName);
+                    unlink($this->getParameter('activite_directory_public').'/'.$lastFileName);
+                }
+
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $activite->setImage($fileName);
+
+                $file->move(
+                    $this->getParameter('activite_directory'),
+                    $fileName
+                );
+            }
+
+            $activite->setModifierA(new \DateTime());
+            $entityManager->flush();
+
+            return $this->redirectToRoute('activite_liste');
+        }
+        return $this->render('activite/activite_modifier.html.twig', [
+            'title' => 'Modifier',
+            'id' => $id,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/activite/supprimer/{id}", name="activite_supprimer")
+     */
+    public function activite_supprimer($id)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+
+        $activite = $entityManager->getRepository(Activite::class)->find($id);
+
+        $lastFileName = $activite->getImage();
+
+        if (file_exists($this->getParameter('activite_directory').'/'.$lastFileName)) {
+
+            unlink($this->getParameter('activite_directory').'/'.$lastFileName);
+            unlink($this->getParameter('activite_directory_public').'/'.$lastFileName);
+        }
+
+        $entityManager->remove($activite);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('activite_liste');
+    }
+
+    /**
      * @Route("/activite/liste", name="activite_liste")
      */
 

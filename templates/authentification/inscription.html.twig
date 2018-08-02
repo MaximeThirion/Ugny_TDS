@@ -3,7 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<main class="container">
+<section class="container">
     <h1>{{ title }}</h1>
     {{ form_start(form) }}
         {{ form_row(form.file) }}
@@ -16,5 +16,5 @@
         {{ form_row(form.telephone, {'label': 'Numero de téléphone'}) }}
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     {{ form_end(form) }}
-</main>
+</section>
 {% endblock %}

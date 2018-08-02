@@ -83,7 +83,7 @@ class Utilisateur implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(pattern="/^[0-9]*$/", message="Ne doit contenir que des chiffres (0-9)")
      * @Assert\Length(min=10, minMessage="Doit faire au moins 10 caractères")
-     * @Assert\Length(max=12, maxMessage="Ne doit pas faire plus de 12 caractères")
+     * @Assert\Length(max=15, maxMessage="Ne doit pas faire plus de 15 caractères")
      */
     private $telephone;
 

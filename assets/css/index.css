@@ -1,15 +1,28 @@
-body {
-  margin-top: 56px; }
+html {
+  min-height: 100%;
+  position: relative; }
 
-main {
-  padding-top: 48px; }
+body {
+  margin: 56px 0 120px 0; }
+
+article {
+  margin-top: 48px; }
 
 .message_flash {
   margin-bottom: 0; }
   .message_flash p {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    font-size: 1.3em; }
 
 .picto_profil {
   font-size: 1.5em; }
+
+footer {
+  background-color: #484848;
+  position: absolute;
+  height: 120px;
+  bottom: 0;
+  left: 0;
+  width: 100%; }
 
 /*# sourceMappingURL=index.css.map */

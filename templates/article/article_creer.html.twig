@@ -4,7 +4,7 @@
 
 {% block body %}
     <script src="//cdn.ckeditor.com/4.10.0/full/ckeditor.js"></script>
-    <main class="container">
+    <section class="container">
         <h1>{{ title }}</h1>
         {{ form_start(form) }}
             {{ form_row(form.titre) }}
@@ -16,7 +16,7 @@
             {{ form_row(form.categories) }}
             <button type="submit" class="btn btn-primary">Creer l'article</button>
         {{ form_end(form) }}
-    </main>
+    </section>
     <script>
         CKEDITOR.replace( 'editor1', {
             language: 'fr',
