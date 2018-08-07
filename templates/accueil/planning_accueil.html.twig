@@ -31,14 +31,6 @@
                     <p>{{ evenement.activite.soustitre }}</p>
                     <p>{{ evenement.date|date('d-m-Y H:i') }}</p>
 
-                    {% if evenement.utilisateurs|length == "0" %}
-                        <p>Il n'y a encore personne</p>
-                    {% elseif evenement.utilisateurs|length == "1" %}
-                        <p>{{ evenement.utilisateurs|length }} participant</p>
-                    {% else %}
-                        <p>{{ evenement.utilisateurs|length }} participants</p>
-                    {% endif %}
-
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
                         {% set trouve = false %}

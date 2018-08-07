@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Controller;
+
+use App\Form\ContactType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class ContactController extends Controller
+{
+    /**
+     * @Route("/contact", name="contact")
+     */
+    public function contact(Request $request, \Swift_Mailer $mailer)
+    {
+
+        $form = $this->createForm(ContactType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $message = (new \Swift_Message())
+                ->setFrom(array($form->get('email')->getData() => $form->get('email')->getData()))
+                ->setTo('adminugny@yopmail.com')
+                ->setSubject($form->get('sujet')->getData())
+                ->setBody($form->get('nom')->getData().' '.$form->get('prenom')->getData().'<br>'.$form->get('message')->getData());
+
+            $mailer->send($message);
+
+            return $this->redirectToRoute('planning');
+        }
+
+        return $this->render('contact/contact.html.twig', [
+            'title' => 'Contact',
+            'form' => $form->createView(),
+        ]);
+    }
+}
