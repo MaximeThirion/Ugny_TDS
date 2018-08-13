@@ -6,54 +6,56 @@
 
 {% block body %}
     <section class="container">
-        <h1>Planning</h1>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col" colspan="2">Participants</th>
-                <th scope="col">Activité</th>
-                <th scope="col">Creer à</th>
-                <th scope="col">Modifier à</th>
-                <th scope="col">Editer</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for planning in listePlanning %}
+        <article>
+            <h1>Planning</h1>
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td class="align-middle">
-                        {% if  planning.date|date('w') == '0' %}
-                            Dimanche <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% elseif planning.date|date('w') == '1' %}
-                            Lundi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% elseif planning.date|date('w') == '2' %}
-                            Mardi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% elseif planning.date|date('w') == '3' %}
-                            Mercredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% elseif planning.date|date('w') == '4' %}
-                            Jeudi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% elseif planning.date|date('w') == '5' %}
-                            Vendredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% elseif planning.date|date('w') == '6' %}
-                            Samedi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
-                        {% endif %}
-                    </td>
-                    <td class="align-middle">{{ planning.utilisateurs|length }}</td>
-                    <td class="align-middle">
-                        <select class="form-control">
-                            {% for utilisateur in planning.utilisateurs %}
-                                <option>{{ utilisateur.prenom }} {{ utilisateur.nom }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-
-                    <td class="align-middle">{{ planning.activite }}</td>
-                    <td class="align-middle">{{ planning.creera|date('d-m-Y H:i:s')}}</td>
-                    <td class="align-middle">{{ planning.modifiera|date('d-m-Y H:i:s') }}</td>
-                    <td class="align-middle"><a class="btn btn-primary" href="{{ path('planning_modifier', {'id': planning.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('planning_supprimer', {'id': planning.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>
+                    <th scope="col">Date</th>
+                    <th scope="col" colspan="2">Participants</th>
+                    <th scope="col">Activité</th>
+                    <th scope="col">Creer à</th>
+                    <th scope="col">Modifier à</th>
+                    <th scope="col">Editer</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for planning in listePlanning %}
+                    <tr>
+                        <td class="align-middle">
+                            {% if  planning.date|date('w') == '0' %}
+                                Dimanche <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% elseif planning.date|date('w') == '1' %}
+                                Lundi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% elseif planning.date|date('w') == '2' %}
+                                Mardi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% elseif planning.date|date('w') == '3' %}
+                                Mercredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% elseif planning.date|date('w') == '4' %}
+                                Jeudi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% elseif planning.date|date('w') == '5' %}
+                                Vendredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% elseif planning.date|date('w') == '6' %}
+                                Samedi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                            {% endif %}
+                        </td>
+                        <td class="align-middle">{{ planning.utilisateurs|length }}</td>
+                        <td class="align-middle">
+                            <select class="form-control">
+                                {% for utilisateur in planning.utilisateurs %}
+                                    <option>{{ utilisateur.prenom }} {{ utilisateur.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+
+                        <td class="align-middle">{{ planning.activite }}</td>
+                        <td class="align-middle">{{ planning.creera|date('d-m-Y H:i:s')}}</td>
+                        <td class="align-middle">{{ planning.modifiera|date('d-m-Y H:i:s') }}</td>
+                        <td class="align-middle"><a class="btn btn-primary" href="{{ path('planning_modifier', {'id': planning.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('planning_supprimer', {'id': planning.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </article>
     </section>
 {% endblock %}

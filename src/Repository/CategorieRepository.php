@@ -19,6 +19,21 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    public function categorie_articles($categorie): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT a
+        FROM App\Entity\Article a
+        JOIN a.categories b
+        WHERE b.id = :categorie'
+        )->setParameter('categorie', $categorie)
+        ;
+
+        return $query->execute();
+    }
+
 //    /**
 //     * @return Categorie[] Returns an array of Categorie objects
 //     */

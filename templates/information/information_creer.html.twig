@@ -4,11 +4,13 @@
 
 {% block body %}
     <section class="container">
-        <h1>{{ title }}</h1>
-        {{ form_start(form) }}
+        <article>
+            <h1>{{ title }}</h1>
+            {{ form_start(form) }}
             {{ form_row(form.message) }}
             {{ form_row(form.expire_a) }}
             <button type="submit" class="btn btn-primary">Publier l'information</button>
-        {{ form_end(form) }}
+            {{ form_end(form) }}
+        </article>
     </section>
 {% endblock %}

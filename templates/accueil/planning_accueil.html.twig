@@ -44,6 +44,8 @@
                         {% else %}
                             <a class="btn btn-primary" href="{{ path('participe', {'id': evenement.id}) }}">Je participe</a>
                         {% endif %}
+                    {% else %}
+                        <a class="btn btn-primary" href="{{ path('contact') }}">Essayer l'activité</a>
                     {% endif %}
                 </div>
             {% endfor %}

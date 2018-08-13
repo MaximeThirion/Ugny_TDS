@@ -12,7 +12,7 @@
     <section class="container">
         <article>
             {% for categorie in article.categories %}
-                <h4>{{ categorie.label }}</h4>
+                <a href="{{ path('categorie_trier', {'id': categorie.id}) }}">{{ categorie.label }}</a>
             {% endfor %}
             {{ article.contenu|raw }}
             <div class="row">

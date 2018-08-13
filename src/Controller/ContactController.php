@@ -25,7 +25,13 @@ class ContactController extends Controller
                 ->setFrom(array($form->get('email')->getData() => $form->get('email')->getData()))
                 ->setTo('adminugny@yopmail.com')
                 ->setSubject($form->get('sujet')->getData())
-                ->setBody($form->get('nom')->getData().' '.$form->get('prenom')->getData().'<br>'.$form->get('message')->getData());
+                ->setBody(
+                    $this->renderView(
+                        'emails/contact.html.twig',
+                        ['form' => $form->createView()]
+                    ),
+                    'text/html'
+                );
 
             $mailer->send($message);
 

@@ -4,11 +4,13 @@
 
 {% block body %}
     <section class="container">
-        <h1>{{ title }}</h1>
+        <article>
+            <h1>{{ title }}</h1>
 
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-        {{ form_end(form) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            {{ form_end(form) }}
+        </article>
     </section>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <article>
+            <h1>{{ categorie.label }}</h1>
+            {% for article in categorieArticles %}
+                {% if article.afficher == true %}
+                <p>{{ article.titre }}</p>
+                <p>{{ article.soustitre }}</p>
+                {% endif %}
+            {% endfor %}
+        </article>
+    </section>
+{% endblock %}

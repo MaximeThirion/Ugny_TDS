@@ -86,22 +86,30 @@
                                 <a class="dropdown-item" href="{{ path('planning_liste') }}">Planning</a>
                             </div>
                         </li>
-                        <li {% if 'information_creer' in app.request.attributes.get('_route') %} class="nav-item dropdown active" {% endif %} class="nav-item dropdown">
+                        <li {% if 'information_creer' in app.request.attributes.get('_route') %} class="nav-item dropdown active"
+                        {% elseif 'information_liste' in app.request.attributes.get('_route') %} class="nav-item dropdown active"
+                        {% endif %} class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 Information
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ path('information_creer') }}">Ajouter un message</a>
+                                <a class="dropdown-item" href="{{ path('information_liste') }}">Les messages</a>
                             </div>
+                        </li>
+                        <li {% if 'contact' in app.request.attributes.get('_route') %} class="nav-item active" {% endif %} class="nav-item">
+                            <a class="nav-link" href="{{ path('contact') }}">Contact</a>
                         </li>
                     </ul>
                 {% endif %}
             </div>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <div class="navbar-text mr-2">
-                    <a href=""><span class="align-middle">{{ app.user.prenom }} {{ app.user.nom }}</span> <i class="fas fa-user-circle ml-1 align-middle picto_profil"></i></a>
-                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href=""><span class="align-middle">{{ app.user.prenom }} {{ app.user.nom }}</span> <i class="fas fa-user-circle ml-1 align-middle picto_profil"></i></a>
+                    </li>
+                </ul>
             {% endif %}
             {#<form class="form-inline my-2 my-lg-0" method="post" name="rechercher" action="{{ path('search') }}">#}
             {#<input class="form-control mr-sm-2" name="input_rechercher" type="search" placeholder="Rechercher" aria-label="Rechercher">#}

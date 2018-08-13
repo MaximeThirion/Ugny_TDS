@@ -6,44 +6,46 @@
 
 {% block body %}
     <section class="container">
-        <h1>Articles</h1>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Titre</th>
-                <th scope="col">Sous-titre</th>
-                <th scope="col">Image</th>
-                <th scope="col">Categorie</th>
-                <th scope="col">En ligne</th>
-                <th scope="col">Creer à</th>
-                <th scope="col">Modifier à</th>
-                <th scope="col">Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for article in listeArticle %}
+        <article>
+            <h1>Articles</h1>
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <td class="align-middle"><a href="{{ path('article_page', {'id': article.id}) }}">{{ article.id }}</a></td>
-                    <td class="align-middle">{{ article.titre }}</td>
-                    <td class="align-middle">{{ article.soustitre }}</td>
-                    <td class="align-middle"><img class="rounded" src="{{ asset('build/article/image/' ~ article.image) }}" height="40px" width="40px"></td>
-                    <td class="align-middle">
-                        {% for categorie in article.categories %}
-                            <li>{{ categorie.label }}</li>
-                        {% endfor %}
-                    </td>
-                    {% if article.afficher == "0" %}
-                        <td class="align-middle"><a href="{{ path('article_afficher', {'id': article.id}) }}" class="btn btn-danger"><i class="fas fa-times" style="width: 15px;height: 15px"></i></a></td>
-                    {% else %}
-                        <td class="align-middle"><a href="{{ path('article_cacher', {'id': article.id}) }}" class="btn btn-success"><i class="fas fa-check" style="width: 15px;height: 15px"></i></a></td>
-                    {% endif %}
-                    <td class="align-middle">{{ article.creera|date('d-m-Y H:i:s')}}</td>
-                    <td class="align-middle">{{ article.modifiera|date('d-m-Y H:i:s') }}</td>
-                    <td class="align-middle"><a class="btn btn-primary" href="{{ path('article_modifier', {'id': article.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('article_supprimer', {'id': article.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>
+                    <th scope="col">Id</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Sous-titre</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Categorie</th>
+                    <th scope="col">En ligne</th>
+                    <th scope="col">Creer à</th>
+                    <th scope="col">Modifier à</th>
+                    <th scope="col">Edit</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for article in listeArticle %}
+                    <tr>
+                        <td class="align-middle"><a href="{{ path('article_page', {'id': article.id}) }}">{{ article.id }}</a></td>
+                        <td class="align-middle">{{ article.titre }}</td>
+                        <td class="align-middle">{{ article.soustitre }}</td>
+                        <td class="align-middle"><img class="rounded" src="{{ asset('build/article/image/' ~ article.image) }}" height="40px" width="40px"></td>
+                        <td class="align-middle">
+                            {% for categorie in article.categories %}
+                                <li>{{ categorie.label }}</li>
+                            {% endfor %}
+                        </td>
+                        {% if article.afficher == "0" %}
+                            <td class="align-middle"><a href="{{ path('article_afficher', {'id': article.id}) }}" class="btn btn-danger"><i class="fas fa-times" style="width: 15px;height: 15px"></i></a></td>
+                        {% else %}
+                            <td class="align-middle"><a href="{{ path('article_cacher', {'id': article.id}) }}" class="btn btn-success"><i class="fas fa-check" style="width: 15px;height: 15px"></i></a></td>
+                        {% endif %}
+                        <td class="align-middle">{{ article.creera|date('d-m-Y H:i:s')}}</td>
+                        <td class="align-middle">{{ article.modifiera|date('d-m-Y H:i:s') }}</td>
+                        <td class="align-middle"><a class="btn btn-primary" href="{{ path('article_modifier', {'id': article.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('article_supprimer', {'id': article.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </article>
     </section>
 {% endblock %}

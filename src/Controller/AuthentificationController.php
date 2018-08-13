@@ -21,7 +21,6 @@ class AuthentificationController extends Controller
     /**
      * @Route("/inscription", name="inscription")
      */
-
     // Fonction qui permet de créer un utilisateur et d'encoder le mot de passe d'un utilisateur
     public function inscription(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
     {

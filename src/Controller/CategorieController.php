@@ -2,22 +2,35 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * Class CategorieController
- * @package App\Controller
- * @Route("/admin")
- */
-
 class CategorieController extends Controller
 {
     /**
-     * @Route("/categorie/creer", name="categorie_creer")
+     * @Route("/categorie/{id}", name="categorie_trier")
+     */
+    public function categorie_trier($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $categorie = $entityManager->getRepository(Categorie::class)->find($id);
+
+        $categorieArticles = $entityManager->getRepository(Categorie::class)->categorie_articles($categorie);
+
+        return $this->render('categorie/categorie_trier.html.twig', [
+            'title' => 'Liste',
+            'categorie' => $categorie,
+            'categorieArticles' => $categorieArticles,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/categorie/creer", name="categorie_creer")
      */
     public function categorie_creer(Request $request)
     {
@@ -46,7 +59,7 @@ class CategorieController extends Controller
     }
 
     /**
-     * @Route("/categorie/modifier/{id}", name="categorie_modifier")
+     * @Route("/admin/categorie/modifier/{id}", name="categorie_modifier")
      */
     public function categorie_modifier(Request $request, $id)
     {
@@ -72,7 +85,7 @@ class CategorieController extends Controller
     }
 
     /**
-     * @Route("/categorie/supprimer/{id}", name="categorie_supprimer")
+     * @Route("/admin/categorie/supprimer/{id}", name="categorie_supprimer")
      */
     public function categorie_supprimer($id)
     {
@@ -87,7 +100,7 @@ class CategorieController extends Controller
     }
 
     /**
-     * @Route("/categorie/liste", name="categorie_liste")
+     * @Route("/admin/categorie/liste", name="categorie_liste")
      */
     public function categorie_liste()
     {
