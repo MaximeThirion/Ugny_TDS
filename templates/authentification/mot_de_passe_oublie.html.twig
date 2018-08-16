@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <article>
+            <h1>{{ title }}</h1>
+            {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            <button type="submit" class="btn btn-primary">Reset</button>
+            {{ form_end(form) }}
+        </article>
+    </section>
+{% endblock %}
