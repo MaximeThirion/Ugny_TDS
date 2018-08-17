@@ -63,9 +63,35 @@
                         <div id="volume">
                             <div id="level"></div>
                         </div>
-
                     </div>
                 </div>
+            </div>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class="col-8">
+                    {{ form_start(form) }}
+                        {{ form_row(form.message, {'label': 'Poster un commentaire'}) }}
+                        <button type="submit" class="btn btn-primary">Poster un commentaire</button>
+                    {{ form_end(form) }}
+                </div>
+            {% else %}
+                <div class="col-8">
+                    <p>Vous devez être connecté pour poster un commentaire.</p>
+                </div>
+            {% endif %}
+            <div class="col-8">
+                <p>Les commentaires</p>
+                {% for commentaire in article.commentaires %}
+                    <div>
+                        <p>{{ commentaire.auteur }}</p>
+                        <p>{{ commentaire.message }}</p>
+                        <p><small>{{ commentaire.creera|date('d-m-Y H:i:s') }}</small></p>
+                        {% if commentaire.auteur == app.user %}
+                            <p><a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a></p>
+                        {% elseif is_granted('ROLE_ADMIN') %}
+                            <p><a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a></p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </article>
     </section>

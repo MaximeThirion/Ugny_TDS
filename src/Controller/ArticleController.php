@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Commentaire;
 use App\Form\ArticleType;
+use App\Form\CommentaireType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -263,14 +265,55 @@ class ArticleController extends Controller
     /**
      * @Route("/article/{id}", name="article_page")
      */
-    public function article_page($id)
+    public function article_page($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
+        $utilisateur = $this->getUser();
         $article = $entityManager->getRepository(Article::class)->find($id);
+
+        $commentaire = new Commentaire();
+
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $commentaire = $form->getData();
+
+            $commentaire->setCreerA(new \DateTime());
+            $commentaire->setModifierA(new \DateTime());
+            $commentaire->setArticle($article);
+            $commentaire->setAuteur($utilisateur);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commentaire);
+
+            $entityManager->flush();
+
+            return $this->redirect($request->getUri());
+        }
 
         return $this->render('article/article_page.html.twig', [
             'article' => $article,
+            'commentaire' => $commentaire,
+            'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/article/{idarticle}/commentaire/supprimer/{id}", name="commentaire_supprimer")
+     */
+    public function commentaire_supprimer($id, $idarticle)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $commentaire = $entityManager->getRepository(Commentaire::class)->find($id);
+
+        $entityManager->remove($commentaire);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('article_page', ['id' => $idarticle]);
     }
 }
