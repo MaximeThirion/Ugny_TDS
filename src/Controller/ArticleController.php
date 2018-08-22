@@ -230,6 +230,7 @@ class ArticleController extends Controller
         $article = $entityManager->getRepository(Article::class)->find($id);
 
         $article->setAfficher(true);
+        $article->setModifierA(new \DateTime());
 
         $this->addFlash(
             'notification',
@@ -251,6 +252,7 @@ class ArticleController extends Controller
         $article = $entityManager->getRepository(Article::class)->find($id);
 
         $article->setAfficher(false);
+        $article->setModifierA(new \DateTime());
 
         $this->addFlash(
             'notification',
@@ -260,6 +262,21 @@ class ArticleController extends Controller
         $entityManager->flush();
 
         return $this->redirectToRoute('article_liste');
+    }
+
+    /**
+     * @Route("/article", name="article")
+     */
+    public function article()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $listeArticle = $entityManager->getRepository(Article::class)->article();
+
+        return $this->render('article/article_accueil.html.twig', [
+            'title' => 'Test',
+            'listeArticle' => $listeArticle,
+        ]);
     }
 
     /**

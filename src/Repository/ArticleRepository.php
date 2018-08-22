@@ -19,6 +19,18 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function article(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT a
+        FROM App\Entity\Article a
+        ORDER BY a.modifier_a DESC'
+        )->setMaxResults(8);
+
+        return $query->execute();
+    }
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

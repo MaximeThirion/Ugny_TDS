@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{{ asset('build/css/article_accueil.css') }}">{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <article>
+            <h4>Article les plus récent</h4>
+            <div class="row">
+                {% for article in listeArticle %}
+                    {% if article.afficher == true %}
+                        <div class="col-3 article">
+                            <p>{{ article.titre }}</p>
+                            <p>{{ article.soustitre }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </article>
+    </section>
+{% endblock %}
