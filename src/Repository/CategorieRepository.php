@@ -27,7 +27,8 @@ class CategorieRepository extends ServiceEntityRepository
             'SELECT a
         FROM App\Entity\Article a
         JOIN a.categories b
-        WHERE b.id = :categorie'
+        WHERE b.id = :categorie
+        ORDER BY a.modifier_a DESC'
         )->setParameter('categorie', $categorie)
         ;
 

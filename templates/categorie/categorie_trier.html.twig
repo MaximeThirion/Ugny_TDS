@@ -1,19 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    {{ title }}
-{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{{ asset('build/css/article_accueil.css') }}">{% endblock %}
 
 {% block body %}
     <section class="container">
         <article>
             <h1>{{ categorie.label }}</h1>
-            {% for article in categorieArticles %}
-                {% if article.afficher == true %}
-                <p>{{ article.titre }}</p>
-                <p>{{ article.soustitre }}</p>
-                {% endif %}
-            {% endfor %}
+            <div class="row">
+                {% for article in categorieArticles %}
+                    {% if article.afficher == true %}
+                        <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article">
+                            <p>{{ article.titre }}</p>
+                            <p>{{ article.soustitre }}</p>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </article>
     </section>
 {% endblock %}

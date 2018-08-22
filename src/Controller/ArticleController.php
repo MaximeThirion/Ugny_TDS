@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Categorie;
 use App\Entity\Commentaire;
 use App\Form\ArticleType;
 use App\Form\CommentaireType;
@@ -211,7 +212,7 @@ class ArticleController extends Controller
         $listeArticle = $this
             ->getDoctrine()
             ->getRepository(Article::class)
-            ->findAll();
+            ->article_asc();
 
         // Je créer le rendu twig (template) de ma fonction 'lister'
         return $this->render('article/article_liste.html.twig', [
@@ -271,11 +272,14 @@ class ArticleController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $listeArticle = $entityManager->getRepository(Article::class)->article();
+        $listeArticle = $entityManager->getRepository(Article::class)->article_desc();
+
+        $listeCategorie = $entityManager->getRepository(Categorie::class)->findAll();
 
         return $this->render('article/article_accueil.html.twig', [
             'title' => 'Test',
             'listeArticle' => $listeArticle,
+            'listeCategorie' => $listeCategorie,
         ]);
     }
 

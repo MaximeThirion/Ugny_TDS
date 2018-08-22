@@ -19,7 +19,7 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function article(): array
+    public function article_desc(): array
     {
         $entityManager = $this->getEntityManager();
 
@@ -28,6 +28,19 @@ class ArticleRepository extends ServiceEntityRepository
         FROM App\Entity\Article a
         ORDER BY a.modifier_a DESC'
         )->setMaxResults(8);
+
+        return $query->execute();
+    }
+
+    public function article_asc(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT a
+        FROM App\Entity\Article a
+        ORDER BY a.creer_a ASC'
+        );
 
         return $query->execute();
     }
