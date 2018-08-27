@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ activite.titre }}{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <article>
+            {{ activite.contenu|raw }}
+        </article>
+    </section>
+{% endblock %}

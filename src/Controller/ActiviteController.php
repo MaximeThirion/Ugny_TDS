@@ -8,16 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * Class ArticleController
- * @package App\Controller
- * @Route("/admin")
- */
-
 class ActiviteController extends Controller
 {
     /**
-     * @Route("/activite/creer", name="activite_creer")
+     * @Route("/admin/activite/creer", name="activite_creer")
      */
 
     // Fonction qui permet de créer une activité
@@ -138,7 +132,6 @@ class ActiviteController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
 
-
         $activite = $entityManager->getRepository(Activite::class)->find($id);
 
         $lastFileName = $activite->getImage();
@@ -156,7 +149,7 @@ class ActiviteController extends Controller
     }
 
     /**
-     * @Route("/activite/liste", name="activite_liste")
+     * @Route("/admin/activite/liste", name="activite_liste")
      */
 
     // Fonction qui permet de lister les activités
@@ -173,6 +166,20 @@ class ActiviteController extends Controller
             // Je passe mes variables au template twig
             'title' => 'Liste',
             'listeActivite' => $listeActivite,
+        ]);
+    }
+
+    /**
+     * @Route("/activite/{id}", name="activite_page")
+     */
+    public function activite_page($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $activite = $entityManager->getRepository(Activite::class)->find($id);
+
+        return $this->render('activite/activite_page.html.twig', [
+            'activite' => $activite,
         ]);
     }
 }

@@ -22,7 +22,7 @@
                 <tbody>
                 {% for activite in listeActivite %}
                     <tr>
-                        <td class="align-middle">{{ activite.titre }}</td>
+                        <td class="align-middle"><a href="{{ path('activite_page', {'id': activite.id}) }}">{{ activite.titre }}</a></td>
                         <td class="align-middle">{{ activite.soustitre }}</td>
                         <td class="align-middle"><img class="rounded" src="{{ asset('build/activite/image/' ~ activite.image) }}" height="40px" width="40px"></td>
                         <td class="align-middle">{{ activite.creera|date('d-m-Y H:i:s')}}</td>
