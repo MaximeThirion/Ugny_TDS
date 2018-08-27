@@ -11,6 +11,9 @@
     {% if article.afficher == true %}
     <section class="container">
         <article>
+            <div class="row">
+                <a href="{{ path('article') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Retour aux articles</a>
+            </div>
             {% for categorie in article.categories %}
                 <a href="{{ path('categorie_trier', {'id': categorie.id}) }}">{{ categorie.label }}</a>
             {% endfor %}

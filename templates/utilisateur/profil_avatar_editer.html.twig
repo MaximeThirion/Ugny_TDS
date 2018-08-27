@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <article>
+            <h1>{{ title }}</h1>
+            {{ form_start(form) }}
+            {{ form_row(form.file) }}
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            {{ form_end(form) }}
+        </article>
+    </section>
+{% endblock %}
