@@ -28,6 +28,18 @@ class Categorie
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
+    private $file;
+
     public function __construct()
     {
         $this->categorie_idcategorie = new ArrayCollection();
@@ -104,6 +116,42 @@ class Categorie
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->image = $file;
 
         return $this;
     }

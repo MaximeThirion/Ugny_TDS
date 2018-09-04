@@ -11,7 +11,7 @@
             <div class="row">
                 {% for article in categorieArticles %}
                     {% if article.afficher == true %}
-                        <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article">
+                        <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article" style="background-image: url({{ asset('build/article/image/' ~ article.image) }})">
                             <p>{{ article.titre }}</p>
                             <p>{{ article.soustitre }}</p>
                         </a>

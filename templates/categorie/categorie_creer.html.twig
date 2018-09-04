@@ -7,7 +7,9 @@
         <article>
             <h1>{{ title }}</h1>
             {{ form_start(form) }}
+            {{ form_row(form.file) }}
             {{ form_row(form.label) }}
+            {{ form_row(form.description) }}
             <button type="submit" class="btn btn-primary">Creer la catégorie</button>
             {{ form_end(form) }}
         </article>

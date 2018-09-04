@@ -44,6 +44,16 @@ class CategorieController extends Controller
 
             $categorie = $form->getData();
 
+            $file = $form->get('file')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            $file->move(
+                $this->getParameter('categorie_directory'),
+                $fileName
+            );
+
+            $categorie->setImage($fileName);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($categorie);
 
