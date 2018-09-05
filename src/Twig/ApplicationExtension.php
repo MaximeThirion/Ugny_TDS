@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\Activite;
 use App\Entity\Information;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\Extension\AbstractExtension;
@@ -30,10 +31,24 @@ class ApplicationExtension extends AbstractExtension
         return $information;
     }
 
+    public function getActivite($entityName) {
+
+        $entitiesMapping = [
+            'activite' => Activite::class,
+        ];
+
+        $entity = $entitiesMapping[$entityName];
+
+        $activite = $this->doctrine->getRepository($entity)->findAll();
+
+        return $activite;
+    }
+
     public function getFunctions()
     {
         return array(
-            new TwigFunction('getMessage', [$this, 'getMessage'])
+            new TwigFunction('getMessage', [$this, 'getMessage']),
+            new TwigFunction('getActivite', [$this, 'getActivite'])
         );
     }
 }

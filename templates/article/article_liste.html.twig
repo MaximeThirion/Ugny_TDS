@@ -5,13 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <section class="container">
+    <section class="col-10 m-auto">
         <article>
             <h1>Articles</h1>
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Id</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Sous-titre</th>
                     <th scope="col">Image</th>
@@ -25,8 +24,7 @@
                 <tbody>
                 {% for article in listeArticle %}
                     <tr>
-                        <td class="align-middle"><a href="{{ path('article_page', {'id': article.id}) }}">{{ article.id }}</a></td>
-                        <td class="align-middle">{{ article.titre }}</td>
+                        <td class="align-middle"><a href="{{ path('article_page', {'id': article.id}) }}">{{ article.titre }}</a></td>
                         <td class="align-middle">{{ article.soustitre }}</td>
                         <td class="align-middle"><img class="rounded" src="{{ asset('build/article/image/' ~ article.image) }}" height="40px" width="40px"></td>
                         <td class="align-middle">

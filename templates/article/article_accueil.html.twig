@@ -7,29 +7,31 @@
 {% block body %}
     <section class="section_article">
         <article>
-            <h4>Les articles les plus récents</h4>
-            <div class="row">
-                {% for article in listeArticle %}
-                    {% if article.afficher == true %}
-                        <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article" style="background-image: url({{ asset('build/article/image/' ~ article.image) }})">
-                            <div>
-                                <p class="align-middle">{{ article.titre }}</p>
-                            </div>
-                        </a>
-                    {% endif %}
-                {% endfor %}
+            <div class="row contenu">
+                <h2 class="col-12">Les articles les plus récents</h2>
+                <div class="row col-12 p-0 contenu_article">
+                    {% for article in listeArticle %}
+                        {% if article.afficher == true %}
+                            <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article" style="background-image: url({{ asset('build/article/image/' ~ article.image) }})">
+                                <div>
+                                    <p class="align-middle">{{ article.titre }}</p>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-            <div class="container">
-                <h4>Les articles par activités</h4>
-                <div class="row">
+            <div class="row contenu contenu_categorie">
+                <h2>Les articles par activités</h2>
+                <div class="row m-0">
                     {% set compteur = false %}
                     {% for categorie in listeCategorie %}
                         {% if compteur == false %}
                             <a href="{{ path('categorie_trier', {'id': categorie.id}) }}" class="col-12 categorie">
                                 <div class="row categorie_bloc">
-                                    <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-4">
-                                    <div class="col-8 text-center">
-                                        <h2 class="col-12">{{ categorie.label }}</h2>
+                                    <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
+                                    <div class="col-9 text-center">
+                                        <h3 class="col-12">{{ categorie.label }}</h3>
                                         <p class="col-11">{{ categorie.description }}</p>
                                         <button class="btn btn-primary bouton_droite">ACCEDER</button>
                                     </div>
@@ -39,17 +41,16 @@
                         {% else %}
                             <a href="{{ path('categorie_trier', {'id': categorie.id}) }}" class="col-12 categorie">
                                 <div class="row categorie_bloc">
-                                    <div class="col-8 text-center">
-                                        <h2 class="col-12">{{ categorie.label }}</h2>
-                                        <p class="col-11">{{ categorie.description }}</p>
+                                    <div class="col-9 text-center">
+                                        <h3 class="col-12">{{ categorie.label }}</h3>
+                                        <p class="col-10">{{ categorie.description }}</p>
                                         <button class="btn btn-primary bouton_gauche">ACCEDER</button>
                                     </div>
-                                    <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-4">
+                                    <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
                                 </div>
                             </a>
                             {% set compteur = false %}
                         {% endif %}
-
                     {% endfor %}
                 </div>
             </div>
