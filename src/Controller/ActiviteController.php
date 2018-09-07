@@ -62,7 +62,7 @@ class ActiviteController extends Controller
             return $this->redirectToRoute('activite_liste');
         }
 
-        // Je créer le rendu twig (template) de ma fonction créer
+        // J'affiche le rendu twig (template) de ma fonction créer
         return $this->render('activite/activite_creer.html.twig', [
             'title' => 'Activite',
             'form' => $form->createView(),
@@ -76,9 +76,10 @@ class ActiviteController extends Controller
     // Fonction qui permet de modifier un article
     public function activite_modifier(Request $request, $id)
     {
-
+        // J'instancie entityManager
         $entityManager = $this->getDoctrine()->getManager();
 
+        //
         $activite = $entityManager->getRepository(Activite::class)->find($id);
 
         $lastFileName = $activite->getImage();
@@ -172,12 +173,15 @@ class ActiviteController extends Controller
     /**
      * @Route("/activite/{id}", name="activite_page")
      */
+
+    // fonction qui permet d'afficher la page d'un article par son id
     public function activite_page($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $activite = $entityManager->getRepository(Activite::class)->find($id);
 
+        // J'affiche la template twig liée à la page d'une activité
         return $this->render('activite/activite_page.html.twig', [
             'activite' => $activite,
         ]);

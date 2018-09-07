@@ -20,6 +20,8 @@ security:
             form_login:
                 login_path: connexion
                 check_path: connexion
+                default_target_path: planning
+                always_use_default_target_path: true
             logout:
                 path:   /authentification/deconnexion
                 target: /

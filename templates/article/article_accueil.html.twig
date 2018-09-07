@@ -7,7 +7,7 @@
 {% block body %}
     <section class="section_article">
         <article>
-            <div class="row contenu">
+            <div class="row contenu col-12">
                 <h2 class="col-12">Les articles les plus récents</h2>
                 <div class="row col-12 p-0 contenu_article">
                     {% for article in listeArticle %}
@@ -21,9 +21,9 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="row contenu contenu_categorie">
-                <h2>Les articles par activités</h2>
-                <div class="row m-0">
+            <div class="row contenu contenu_categorie col-12">
+                <h2 class="col-12">Les articles par activités</h2>
+                <div class="row m-0 p-0 col-12">
                     {% set compteur = false %}
                     {% for categorie in listeCategorie %}
                         {% if compteur == false %}

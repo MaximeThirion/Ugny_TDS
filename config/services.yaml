@@ -15,6 +15,8 @@ parameters:
     audio_directory_public: '%kernel.project_dir%/public/build/article/audio'
     categorie_directory: '%kernel.project_dir%/assets/categorie/image'
     categorie_directory_public: '%kernel.project_dir%/public/build/categorie/image'
+    partenaire_directory: '%kernel.project_dir%/assets/partenaire/image'
+    partenaire_directory_public: '%kernel.project_dir%/public/build/partenaire/image'
 
 services:
     # default configuration for services in *this* file

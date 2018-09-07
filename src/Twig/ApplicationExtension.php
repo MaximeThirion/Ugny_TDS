@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Activite;
 use App\Entity\Information;
+use App\Entity\Partenaire;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -44,11 +45,25 @@ class ApplicationExtension extends AbstractExtension
         return $activite;
     }
 
+    public function getPartenaire($entityName) {
+
+        $entitiesMapping = [
+            'partenaire' => Partenaire::class,
+        ];
+
+        $entity = $entitiesMapping[$entityName];
+
+        $partenaire = $this->doctrine->getRepository($entity)->findAll();
+
+        return $partenaire;
+    }
+
     public function getFunctions()
     {
         return array(
             new TwigFunction('getMessage', [$this, 'getMessage']),
-            new TwigFunction('getActivite', [$this, 'getActivite'])
+            new TwigFunction('getActivite', [$this, 'getActivite']),
+            new TwigFunction('getPartenaire', [$this, 'getPartenaire'])
         );
     }
 }

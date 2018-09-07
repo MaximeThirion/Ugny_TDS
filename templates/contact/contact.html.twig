@@ -6,14 +6,25 @@
     <section class="container">
         <article>
             <h1>{{ title }}</h1>
-            {{ form_start(form) }}
-            {{ form_row(form.nom, {'label': 'Votre nom' }) }}
-            {{ form_row(form.prenom, {'label': 'Votre prenom' }) }}
-            {{ form_row(form.sujet) }}
-            {{ form_row(form.email, {'label': 'Votre adresse mail' }) }}
-            {{ form_row(form.message, {'label': 'Votre message' }) }}
-            <button type="submit" class="btn btn-primary">Envoyer votre message</button>
-            {{ form_end(form) }}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                {{ form_start(form) }}
+                {{ form_row(form.nom, {'label': 'Votre nom', 'value': app.user.nom }) }}
+                {{ form_row(form.prenom, {'label': 'Votre prenom', 'value': app.user.prenom }) }}
+                {{ form_row(form.sujet) }}
+                {{ form_row(form.email, {'label': 'Votre adresse mail', 'value': app.user.email }) }}
+                {{ form_row(form.message, {'label': 'Votre message' }) }}
+                <button type="submit" class="btn btn-primary">Envoyer votre message</button>
+                {{ form_end(form) }}
+            {% else %}
+                {{ form_start(form) }}
+                {{ form_row(form.nom, {'label': 'Votre nom' }) }}
+                {{ form_row(form.prenom, {'label': 'Votre prenom' }) }}
+                {{ form_row(form.sujet) }}
+                {{ form_row(form.email, {'label': 'Votre adresse mail' }) }}
+                {{ form_row(form.message, {'label': 'Votre message' }) }}
+                <button type="submit" class="btn btn-primary">Envoyer votre message</button>
+                {{ form_end(form) }}
+            {% endif %}
         </article>
     </section>
 {% endblock %}

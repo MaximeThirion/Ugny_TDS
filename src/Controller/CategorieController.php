@@ -32,6 +32,8 @@ class CategorieController extends Controller
     /**
      * @Route("/admin/categorie/creer", name="categorie_creer")
      */
+
+    // Permet la création de différentes catégories
     public function categorie_creer(Request $request)
     {
         $categorie = new Categorie();
@@ -40,10 +42,14 @@ class CategorieController extends Controller
 
         $form->handleRequest($request);
 
+        // Si le formulaire est soumit et valide
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Alors,
+            // Récupération les informations du formulaire
             $categorie = $form->getData();
 
+            // Récupération du chemin
             $file = $form->get('file')->getData();
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 

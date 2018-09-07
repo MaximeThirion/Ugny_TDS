@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180904104404 extends AbstractMigration
+final class Version20180906113802 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -21,6 +21,7 @@ final class Version20180904104404 extends AbstractMigration
         $this->addSql('CREATE TABLE utilisateur (id INT AUTO_INCREMENT NOT NULL, avatar VARCHAR(255) DEFAULT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, telephone VARCHAR(255) DEFAULT NULL, actif TINYINT(1) NOT NULL, roles JSON NOT NULL, creer_a DATETIME NOT NULL, modifier_a DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE utilisateur_planning (utilisateur_id INT NOT NULL, planning_id INT NOT NULL, INDEX IDX_CAE24669FB88E14F (utilisateur_id), INDEX IDX_CAE246693D865311 (planning_id), PRIMARY KEY(utilisateur_id, planning_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE information (id INT AUTO_INCREMENT NOT NULL, message VARCHAR(255) NOT NULL, expire_a DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE partenaire (id INT AUTO_INCREMENT NOT NULL, titre VARCHAR(255) NOT NULL, contenu LONGTEXT NOT NULL, image VARCHAR(255) DEFAULT NULL, creer_a DATETIME NOT NULL, modifier_a DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE planning (id INT AUTO_INCREMENT NOT NULL, activite_id INT DEFAULT NULL, date DATETIME NOT NULL, creer_a DATETIME NOT NULL, modifier_a DATETIME NOT NULL, INDEX IDX_D499BFF69B0F88B1 (activite_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE commentaire (id INT AUTO_INCREMENT NOT NULL, article_id INT NOT NULL, auteur_id INT NOT NULL, creer_a DATETIME NOT NULL, modifier_a DATETIME NOT NULL, message VARCHAR(255) NOT NULL, INDEX IDX_67F068BC7294869C (article_id), INDEX IDX_67F068BC60BB6FE6 (auteur_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE activite (id INT AUTO_INCREMENT NOT NULL, titre VARCHAR(255) NOT NULL, sous_titre VARCHAR(255) NOT NULL, contenu LONGTEXT NOT NULL, image VARCHAR(255) DEFAULT NULL, creer_a DATETIME NOT NULL, modifier_a DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -51,6 +52,7 @@ final class Version20180904104404 extends AbstractMigration
         $this->addSql('DROP TABLE utilisateur');
         $this->addSql('DROP TABLE utilisateur_planning');
         $this->addSql('DROP TABLE information');
+        $this->addSql('DROP TABLE partenaire');
         $this->addSql('DROP TABLE planning');
         $this->addSql('DROP TABLE commentaire');
         $this->addSql('DROP TABLE activite');

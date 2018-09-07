@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ partenaire.titre }}{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <article>
+            {{ partenaire.contenu|raw }}
+        </article>
+    </section>
+{% endblock %}

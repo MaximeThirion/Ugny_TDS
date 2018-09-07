@@ -50,6 +50,10 @@ Encore
     .addPlugin(new CopyWebpackPlugin([
         { from: './assets/categorie/image', to: 'categorie/image' }
     ]))
+
+    .addPlugin(new CopyWebpackPlugin([
+        { from: './assets/partenaire/image', to: 'partenaire/image' }
+    ]))
 ;
 
 module.exports = Encore.getWebpackConfig();

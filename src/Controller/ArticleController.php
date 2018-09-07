@@ -224,6 +224,8 @@ class ArticleController extends Controller
     /**
      * @Route("/admin/article/afficher/{id}", name="article_afficher")
      */
+
+    // Fonction qui permet à l'admin de mettre un article en ligne (Visible/Non visible)
     public function article_afficher($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -233,8 +235,11 @@ class ArticleController extends Controller
         $article->setAfficher(true);
         $article->setModifierA(new \DateTime());
 
+        // Affiche une "notification"
         $this->addFlash(
             'notification',
+
+            // Je notifie à l'admin que l'article au titre "x" est désormais en ligne
             'L\'article \''.$article->getTitre().'\' est en ligne'
         );
 
@@ -246,6 +251,8 @@ class ArticleController extends Controller
     /**
      * @Route("/admin/article/cacher/{id}", name="article_cacher")
      */
+
+    // Fonction qui permet à l'admin de rendre un article hors ligne (non visible sur le site)
     public function article_cacher($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -255,27 +262,37 @@ class ArticleController extends Controller
         $article->setAfficher(false);
         $article->setModifierA(new \DateTime());
 
+        // Je notifie à l'admin que l'article au titre "x" n'est plus en ligne
         $this->addFlash(
             'notification',
             'L\'article \''.$article->getTitre().'\' n\'est plus en ligne'
         );
 
+        // J'execute la requete
         $entityManager->flush();
 
+
+        // Redirection de l'admin vers la liste des articles
         return $this->redirectToRoute('article_liste');
     }
 
     /**
      * @Route("/article", name="article")
      */
+
+    // Affichage des articles
     public function article()
     {
         $entityManager = $this->getDoctrine()->getManager();
 
+        // Affichage des articles par date d'ajout
         $listeArticle = $entityManager->getRepository(Article::class)->article_desc();
 
+        // Affichage des différentes catégories d'article
         $listeCategorie = $entityManager->getRepository(Categorie::class)->findAll();
 
+        // Affichage du template twig qui permet l'affichage des articles des 8 plus récents
+        // Affichage des catégories d'article
         return $this->render('article/article_accueil.html.twig', [
             'title' => 'Test',
             'listeArticle' => $listeArticle,
@@ -286,6 +303,9 @@ class ArticleController extends Controller
     /**
      * @Route("/article/{id}", name="article_page")
      */
+
+    // Création d'une page article par id
+    // Commentaires par utilisateur
     public function article_page($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -299,13 +319,23 @@ class ArticleController extends Controller
 
         $form->handleRequest($request);
 
+        // Si le formulaire est soumit et valide
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Alors
+            // récupère les données du formulaire (commentaire)
             $commentaire = $form->getData();
 
+            // Définir la date de création du commentaire à la date actuelle (maintenant)
             $commentaire->setCreerA(new \DateTime());
+
+            // Définir la modification d'un commentaire à son edition
             $commentaire->setModifierA(new \DateTime());
+
+            // Défini à quel article est lié le commentaire
             $commentaire->setArticle($article);
+
+            // Défini l'auteur du commentaire à l'utilisateur connecté (session)
             $commentaire->setAuteur($utilisateur);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -313,9 +343,11 @@ class ArticleController extends Controller
 
             $entityManager->flush();
 
+            // Renvoie sur le même url afin que l'utilisateur puisse voir son commentaire
             return $this->redirect($request->getUri());
         }
 
+        // Affichage des commentaires liés aux articles
         return $this->render('article/article_page.html.twig', [
             'article' => $article,
             'commentaire' => $commentaire,
@@ -326,15 +358,21 @@ class ArticleController extends Controller
     /**
      * @Route("/article/{idarticle}/commentaire/supprimer/{id}", name="commentaire_supprimer")
      */
+
+    // Permet de supprimer un commentaire
     public function commentaire_supprimer($id, $idarticle)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
+        // Retrouve le commentaire par son id
         $commentaire = $entityManager->getRepository(Commentaire::class)->find($id);
 
+        // Supprime le commentaire de la base de donnée
         $entityManager->remove($commentaire);
+        // Execute la requete
         $entityManager->flush();
 
+        // Redirection sur la page d'un article par son id
         return $this->redirectToRoute('article_page', ['id' => $idarticle]);
     }
 }

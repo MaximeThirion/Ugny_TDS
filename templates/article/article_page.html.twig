@@ -87,7 +87,7 @@
                     <div>
                         <p>{{ commentaire.auteur }}</p>
                         <p>{{ commentaire.message }}</p>
-                        <p><small>{{ commentaire.creera|date('d-m-Y H:i:s') }}</small></p>
+                        <p><small>Le {{ commentaire.creera|date('d-m-Y à H:i:s') }}</small></p>
                         {% if commentaire.auteur == app.user %}
                             <p><a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a></p>
                         {% elseif is_granted('ROLE_ADMIN') %}

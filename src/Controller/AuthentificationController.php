@@ -37,17 +37,27 @@ class AuthentificationController extends Controller
 
             $utilisateur = $form->getData();
 
+            $avatarParDefaut = 'avatar.png';
+
             $password = $passwordEncoder->encodePassword($utilisateur, $utilisateur->getPassword());
             $utilisateur->setPassword($password);
 
-            $file = $form->get('file')->getData();
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            if ($form->get('file')->getData() === null) {
 
-            $file->move(
-                $this->getParameter('avatar_directory'),
-                $fileName
-            );
-            $utilisateur->setAvatar($fileName);
+                $utilisateur->setAvatar($avatarParDefaut);
+            }
+            else {
+
+                $file = $form->get('file')->getData();
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+                $file->move(
+                    $this->getParameter('avatar_directory'),
+                    $fileName
+                );
+                $utilisateur->setAvatar($fileName);
+            }
+
             $utilisateur->setCreerA(new \DateTime());
             $utilisateur->setModifierA(new \DateTime());
 //            $utilisateur->setRoles(['ROLE_ADMIN']);
