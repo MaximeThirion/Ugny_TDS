@@ -20,6 +20,7 @@ Encore
     .addStyleEntry('css/planning', './assets/css/planning.sass')
     .addStyleEntry('css/article_accueil', './assets/css/article_accueil.sass')
     .addStyleEntry('css/lecteur_mp3', './assets/css/lecteur_mp3.css')
+    .addStyleEntry('css/article_page', './assets/css/article_page.css')
     .addEntry('js/lecteur_mp3', './assets/js/lecteur_mp3.js')
 
     // uncomment if you use TypeScript

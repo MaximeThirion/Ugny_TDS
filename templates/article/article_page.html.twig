@@ -3,8 +3,10 @@
 {% block title %}{{ article.titre }}{% endblock %}
 
 {% block css %}
+    <link rel="stylesheet" href="{{ asset('build/css/article_page.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/lecteur_mp3.css') }}" />
     <script src="{{ asset('build/js/lecteur_mp3.js') }}"></script>
+    <script src="//cdn.ckeditor.com/4.10.0/full/ckeditor.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -69,34 +71,59 @@
                     </div>
                 </div>
             </div>
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <div class="col-8">
-                    {{ form_start(form) }}
-                        {{ form_row(form.message, {'label': 'Poster un commentaire'}) }}
-                        <button type="submit" class="btn btn-primary">Poster un commentaire</button>
-                    {{ form_end(form) }}
-                </div>
-            {% else %}
-                <div class="col-8">
-                    <p>Vous devez être connecté pour poster un commentaire.</p>
-                </div>
-            {% endif %}
-            <div class="col-8">
-                <p>Les commentaires</p>
-                {% for commentaire in article.commentaires %}
-                    <div>
-                        <p>{{ commentaire.auteur }}</p>
-                        <p>{{ commentaire.message }}</p>
-                        <p><small>Le {{ commentaire.creera|date('d-m-Y à H:i:s') }}</small></p>
-                        {% if commentaire.auteur == app.user %}
-                            <p><a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a></p>
-                        {% elseif is_granted('ROLE_ADMIN') %}
-                            <p><a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a></p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+            <div>
+                <h3>Les commentaires</h3>
+                <table class="col-12">
+                    <tr>
+                        <td class="pt-5 pb-5 fond_commentaire">
+                            <table class="col-11 m-auto contenu_commentaire">
+                                <tr>
+                                    <td colspan="2">
+                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                            {{ form_start(form, {'attr': {'class': 'champ_commentaire'}}) }}
+                                            <div id="toolbar-container"></div>
+                                            {{ form_widget(form.message, {'id': 'editor1', 'attr': {'rows': '6'}}) }}
+                                            <button type="submit" class="btn btn-primary">Poster un commentaire</button>
+                                            {{ form_end(form) }}
+                                        {% else %}
+                                            <h5 class="text-center m-3">Vous devez être connecté pour poster un commentaire.</h5>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% for commentaire in article.commentaires %}
+                                    <tr>
+                                        <td class="col-2">
+                                            <img src="{{ asset('build/upload/avatar/' ~ commentaire.auteur.avatar) }}" class="pt-4 pr-4 pb-4 pl-4 m-auto avatar" alt="">
+                                        </td>
+                                        <td class="col-10 pt-4 pb-5 commentaire">
+                                            <h5 class="mb-4">{{ commentaire.auteur }}</h5>
+                                            <p>{{ commentaire.message|raw }}</p>
+                                            <small class="m-0 p-0"><i>Le {{ commentaire.creera|date('d-m-Y à H:i:s') }}</i></small>
+                                            {% if commentaire.auteur == app.user %}
+                                                <a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a>
+                                            {% elseif is_granted('ROLE_ADMIN') %}
+                                                <a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </article>
     </section>
     {% endif %}
+    <script>
+        CKEDITOR.replace( 'editor1', {
+            language: 'fr',
+            toolbar: [
+                { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo', 'Cut', 'Copy', 'Paste'] },
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike' ] },
+                { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align'], items: [ 'NumberedList', 'BulletedList', 'Blockquote'] },
+                { name: 'insert', items: [ 'Smiley', 'SpecialChar' ] }
+            ]
+        });
+    </script>
 {% endblock %}

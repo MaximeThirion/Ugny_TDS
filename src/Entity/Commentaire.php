@@ -39,7 +39,7 @@ class Commentaire
     private $auteur;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $message;
 

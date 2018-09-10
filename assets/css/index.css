@@ -33,6 +33,13 @@ footer {
   background-color: #575757;
   border-radius: 4px; }
 
+blockquote {
+  border-left: 5px solid #929395;
+  padding: 15px 0 1px 30px;
+  width: 90%;
+  margin: 20px auto 20px auto;
+  font-style: italic; }
+
 /* Dropdown Button */
 .dropbtn {
   background-color: #4CAF50;
