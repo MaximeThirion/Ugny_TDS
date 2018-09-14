@@ -10,25 +10,17 @@ use App\Form\CommentaireType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ArticleController extends Controller
 {
 
-    private $audio_directory;
-    private $image_directory;
-
-    public function __construct()
-    {
-        $this->audio_directory = $this->getParameter('audio_directory');
-        $this->image_directory = $this->getParameter('article_directory');
-    }
-
     /**
+     * Fonction qui permet de créer un article
      * @Route("/admin/article/creer", name="article_creer")
      */
-    // Fonction qui permet de créer un article
-    public function articleCreer(Request $request)
+    public function articleCreerAction(Request $request)
     {
         // J'instancie un aticle
         $article = new Article();
@@ -53,14 +45,14 @@ class ArticleController extends Controller
             $fileName = $this->buildFileName($file);
             $mp3Name = $this->buildFileName($mp3);
 
-            // Je déplace le fichier uploadé dans le repertoire 'article_directory' et je lui donne le nom contenu par $fileName
+            // Je déplace le fichier uploadé dans le repertoire 'getImageDirectory()' et je lui donne le nom contenu par $fileName
             $file->move(
-                $this->getParameter($this->image_directory),
+                $this->image_directory,
                 $fileName
             );
 
             $mp3->move(
-                $this->getParameter($this->audio_directory),
+                $this->getAudioDirectory(),
                 $mp3Name
             );
 
@@ -90,17 +82,13 @@ class ArticleController extends Controller
     }
 
     /**
+     * Fonction qui permet de modifier un article
      * @Route("/admin/article/modifier/{id}", name="article_modifier")
      */
-
-    // Fonction qui permet de modifier un article
-    public function articleModifier(Request $request, $id)
+    public function articleModifierAction(Article $article, Request $request)
     {
         // J'instancie le manager (fait les opérations via doctrine)
         $entityManager = $this->getDoctrine()->getManager();
-
-        // Je vais chercher dans Repository l'article possedant cet id
-        $article = $entityManager->getRepository(Article::class)->find($id);
 
         // J'enregistre l'ancien nom (au cas il existerait deja)
         $lastFileName = $article->getImage();
@@ -116,46 +104,9 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupération des données
-            $file = $form->get('file')->getData();
-            $mp3 = $form->get('mp3')->getData();
+            $this -> manageArticleFile($article, $lastFileName, $form->get('file'), 'image');
+            $this -> manageArticleFile($article, $lastFileName, $form->get('mp3'), 'audio');
 
-            // Si l'input fil est = NULL alors
-            if ($file === null) {
-                // J'attribue l'image de l'article à l'ancien nom
-                $article->setImage($lastFileName);
-            } else {
-
-                // Supprimer les anciens fichiers
-                $this->deleteFile($lastFileName);
-
-                // Je génère un nom unique
-                $fileName = $this->buildFileName($file);
-                $article->setImage($this->buildFileName($file));
-
-                // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
-                $file->move(
-                    $this->getParameter($this->image_directory),
-                    $fileName
-                );
-            }
-
-            if ($mp3 === null) {
-                // J'attribue l'audio de l'article à l'ancien nom
-                $article->setAudio($lastMp3Name);
-            } // sinon
-            else {
-
-                // Supprimer les anciens fichiers
-                $this->deleteFile($lastMp3Name);
-
-                $mp3Name = $this->buildFileName($mp3);
-                $article->setAudio($mp3Name);
-
-                $mp3->move(
-                    $this->getParameter($this->audio_directory),
-                    $mp3Name
-                );
-            }
 
             // Je modifier le champ 'modifier_a'
             $article->setModifierA(new \DateTime());
@@ -168,17 +119,16 @@ class ArticleController extends Controller
         // Je créer le rendu twig (template) de ma fonction modifier
         return $this->render('article/article_modifier.html.twig', [
             'title' => 'Modifier',
-            'id' => $id,
+            'id' => $article->getId(),
             'form' => $form->createView(),
         ]);
     }
 
     /**
+     * Fonction qui permet de supprimer un article
      * @Route("/admin/article/supprimer/{id}", name="article_supprimer")
      */
-
-    // Fonction qui permet de supprimer un article
-    public function articleSupprimer($id)
+    public function articleSupprimerAction($id)
     {
         // J'instancie entityManager
         $entityManager = $this->getDoctrine()->getManager();
@@ -191,7 +141,7 @@ class ArticleController extends Controller
 
         // Supprimer les anciens fichiers
         $this->deleteFile($this->image_directory, $lastFileName);
-        $this->deleteFile($this->audio_directory, $lastMp3Name);
+        $this->deleteFile($this->getAudioDirectory(), $lastMp3Name);
 
         // Je supprime l'article de la base de donnée
         $entityManager->remove($article);
@@ -203,11 +153,10 @@ class ArticleController extends Controller
     }
 
     /**
+     * Fonction qi permet de lister les articles
      * @Route("/admin/article/liste", name="article_liste")
      */
-
-    // Fonction qi permet de lister les articles
-    public function articleListe()
+    public function articleListeAction()
     {
         // J'enregistre les articles dans '$listeArticles'
         $listeArticle = $this
@@ -223,11 +172,10 @@ class ArticleController extends Controller
     }
 
     /**
+     * Fonction qui permet à l'admin de mettre un article en ligne (Visible/Non visible)
      * @Route("/admin/article/afficher/{id}", name="article_afficher")
      */
-
-    // Fonction qui permet à l'admin de mettre un article en ligne (Visible/Non visible)
-    public function articleAfficher($id)
+    public function articleAfficherAction($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -250,11 +198,10 @@ class ArticleController extends Controller
     }
 
     /**
+     * Fonction qui permet à l'admin de rendre un article hors ligne (non visible sur le site)
      * @Route("/admin/article/cacher/{id}", name="article_cacher")
      */
-
-    // Fonction qui permet à l'admin de rendre un article hors ligne (non visible sur le site)
-    public function articleCacher($id)
+    public function articleCacherAction($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -278,11 +225,10 @@ class ArticleController extends Controller
     }
 
     /**
+     * Affichage des articles
      * @Route("/article", name="article")
      */
-
-    // Affichage des articles
-    public function article()
+    public function articleAction()
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -302,12 +248,11 @@ class ArticleController extends Controller
     }
 
     /**
+     * Création d'une page article par id
+     * Commentaires par utilisateur
      * @Route("/article/{id}", name="article_page")
      */
-
-    // Création d'une page article par id
-    // Commentaires par utilisateur
-    public function articlePage($id, Request $request)
+    public function articlePageAction($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -357,12 +302,11 @@ class ArticleController extends Controller
     }
 
     /**
+     * Permet de supprimer un commentaire
      * @Route("/article/{id_article}/commentaire/supprimer/{id_commentaire}", name="commentaire_supprimer")
      * @ParamConverter("commentaire", options={"mapping"={"id_commentaire"="id"}})
      */
-
-    // Permet de supprimer un commentaire
-    public function commentaireSupprimer(Commentaire $commentaire, $id_article)
+    public function commentaireSupprimerAction(Commentaire $commentaire, $id_article)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -410,4 +354,42 @@ class ArticleController extends Controller
             $this->unlink($parameter, $file);
         }
     }
+
+    private function getAudioDirectory(){
+        return $this->getParameter('audio_directory()');
+    }
+
+    private function getImageDirectory(){
+        return $this->getParameter('article_directory');
+    }
+
+    private function manageArticleFile(Article $article, String $oldFilePath, File $newFile, $type = 'image')
+    {
+
+        // Si l'input fil est = NULL alors
+        if ($newFile === null) {
+            // J'attribue l'image de l'article à l'ancien nom
+            $article->setImage($oldFilePath);
+        } else {
+
+            // build directory
+            $directory = $this->{$type . '_directory'};
+
+            // Supprimer les anciens fichiers
+            $this->deleteFile($directory, $oldFilePath);
+
+            // Je génère un nom unique
+            $fileName = $this->buildFileName($newFile);
+            $article->setImage($fileName);
+
+            // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
+            $newFile->move(
+                $directory,
+                $fileName
+            );
+        }
+    }
+
+
+
 }
