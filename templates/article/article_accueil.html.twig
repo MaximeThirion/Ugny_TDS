@@ -31,7 +31,7 @@
                                 <div class="row categorie_bloc">
                                     <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
                                     <div class="col-9 text-center">
-                                        <h3 class="col-12">{{ categorie.label }}</h3>
+                                        <h3 class="col-12">{{ categorie.label }} ({{ categorie.articles|length }})</h3>
                                         <p class="col-11">{{ categorie.description }}</p>
                                         <button class="btn btn-primary bouton_droite">ACCEDER</button>
                                     </div>
@@ -42,7 +42,7 @@
                             <a href="{{ path('categorie_trier', {'id': categorie.id}) }}" class="col-12 categorie">
                                 <div class="row categorie_bloc">
                                     <div class="col-9 text-center">
-                                        <h3 class="col-12">{{ categorie.label }}</h3>
+                                        <h3 class="col-12">{{ categorie.label }} ({{ categorie.articles|length }})</h3>
                                         <p class="col-10">{{ categorie.description }}</p>
                                         <button class="btn btn-primary bouton_gauche">ACCEDER</button>
                                     </div>

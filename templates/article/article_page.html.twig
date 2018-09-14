@@ -5,8 +5,8 @@
 {% block css %}
     <link rel="stylesheet" href="{{ asset('build/css/article_page.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/lecteur_mp3.css') }}" />
+    <link rel="stylesheet" href="{{ asset('build/css/ckeditor.css') }}">
     <script src="{{ asset('build/js/lecteur_mp3.js') }}"></script>
-    <script src="//cdn.ckeditor.com/4.10.0/full/ckeditor.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="tableau_commentaire">
                 <h3>Les commentaires</h3>
                 <table class="col-12">
                     <tr>
@@ -92,10 +92,10 @@
                                 </tr>
                                 {% for commentaire in article.commentaires %}
                                     <tr>
-                                        <td class="col-2">
+                                        <td>
                                             <img src="{{ asset('build/upload/avatar/' ~ commentaire.auteur.avatar) }}" class="pt-4 pr-4 pb-4 pl-4 m-auto avatar" alt="">
                                         </td>
-                                        <td class="col-10 pt-4 pb-5 commentaire">
+                                        <td class="col-12 pt-4 pb-5 commentaire">
                                             <h5 class="mb-4">{{ commentaire.auteur }}</h5>
                                             <p>{{ commentaire.message|raw }}</p>
                                             <small class="m-0 p-0"><i>Le {{ commentaire.creera|date('d-m-Y à H:i:s') }}</i></small>

@@ -21,7 +21,10 @@ Encore
     .addStyleEntry('css/article_accueil', './assets/css/article_accueil.sass')
     .addStyleEntry('css/lecteur_mp3', './assets/css/lecteur_mp3.css')
     .addStyleEntry('css/article_page', './assets/css/article_page.css')
+    .addStyleEntry('css/ckeditor', './assets/css/ckeditor.css')
+    .addStyleEntry('css/bootstrap', './assets/css/bootstrap.min.css')
     .addEntry('js/lecteur_mp3', './assets/js/lecteur_mp3.js')
+    .addEntry('js/bootstrap', './assets/js/bootstrap.bundle.min.js')
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -54,6 +57,10 @@ Encore
 
     .addPlugin(new CopyWebpackPlugin([
         { from: './assets/partenaire/image', to: 'partenaire/image' }
+    ]))
+
+    .addPlugin(new CopyWebpackPlugin([
+        { from: './assets/ckeditor', to: 'ckeditor' }
     ]))
 ;
 

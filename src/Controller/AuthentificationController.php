@@ -60,6 +60,7 @@ class AuthentificationController extends Controller
 
             $utilisateur->setCreerA(new \DateTime());
             $utilisateur->setModifierA(new \DateTime());
+
             $utilisateur->setRoles(['ROLE_ADMIN']);
 
             $entityManager = $this->getDoctrine()->getManager();

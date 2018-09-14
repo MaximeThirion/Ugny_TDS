@@ -51,26 +51,6 @@ class Utilisateur implements UserInterface, \Serializable
      */
     private $confirm_password;
 
-    public function getConfirmPassword()
-    {
-        return $this->confirm_password;
-    }
-
-    public function setConfirmPassword($confirm_password): void
-    {
-        $this->confirm_password = $confirm_password;
-    }
-
-    public function getConfirmEmail()
-    {
-        return $this->confirm_email;
-    }
-
-    public function setConfirmEmail($confirm_email): void
-    {
-        $this->confirm_email = $confirm_email;
-    }
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -200,6 +180,26 @@ class Utilisateur implements UserInterface, \Serializable
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword($confirm_password): void
+    {
+        $this->confirm_password = $confirm_password;
+    }
+
+    public function getConfirmEmail()
+    {
+        return $this->confirm_email;
+    }
+
+    public function setConfirmEmail($confirm_email): void
+    {
+        $this->confirm_email = $confirm_email;
     }
 
     public function getCreerA(): ?\DateTimeInterface

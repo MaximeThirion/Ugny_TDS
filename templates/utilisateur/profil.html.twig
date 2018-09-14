@@ -9,10 +9,10 @@
                 <h1 class="mr-2">{{ title }}</h1>
             </div>
             <div class="col m-auto">
-                <img class="rounded" src="{{ asset('build/upload/avatar/' ~ app.user.avatar) }}" alt="">
+                <img src="{{ asset('build/upload/avatar/' ~ app.user.avatar) }}" style="border-radius: 50%" alt="">
                 <a class="btn btn-primary mt-2" href="{{ path('avatar_editer') }}">Changer d'avatar</a>
             </div>
-            <div class="col m-auto">
+            <div class="col mt-5">
                 {{ form_start(form) }}
                 <div class="hidden">
                     {{ form_row(form.file) }}

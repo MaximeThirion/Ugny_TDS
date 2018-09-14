@@ -1,11 +1,13 @@
-table {
+.tableau_commentaire table {
   border: 2px solid #929395;
   box-sizing: border-box; }
-
-td {
+  .tableau_commentaire table table {
+    border: 1px solid #929395;
+    box-sizing: border-box; }
+.tableau_commentaire td {
   position: relative;
   border: 1px solid #929395; }
-  td a {
+  .tableau_commentaire td a {
     position: absolute;
     bottom: 5px;
     right: 5px;
@@ -13,6 +15,7 @@ td {
 
 .avatar {
   height: 168px;
+  width: 168px;
   border-radius: 50%; }
 
 .fond_commentaire {
