@@ -41,24 +41,25 @@ class ArticleController extends Controller
             $file = $form->get('file')->getData();
             $mp3 = $form->get('mp3')->getData();
 
-            // Je génère un nom unique et j'y concat' l'extension d'origine du fichier uploadé
-            $fileName = $this->buildFileName($file);
-            $mp3Name = $this->buildFileName($mp3);
+            if ($file) {
+                // Je génère un nom unique et j'y concat' l'extension d'origine du fichier uploadé
+                $fileName = $this->buildFileName($file);
+                $file->move(
+                    $this->getImageDirectory(),
+                    $fileName
+                );
+                $article->setImage($fileName);
+            }
 
-            // Je déplace le fichier uploadé dans le repertoire 'getImageDirectory()' et je lui donne le nom contenu par $fileName
-            $file->move(
-                $this->image_directory,
-                $fileName
-            );
+            if ($mp3) {
+                $mp3Name = $this->buildFileName($mp3);
+                $mp3->move(
+                    $this->getAudioDirectory(),
+                    $mp3Name
+                );
+                $article->setAudio($mp3Name);
+            }
 
-            $mp3->move(
-                $this->getAudioDirectory(),
-                $mp3Name
-            );
-
-            // J'attribue le chemin relatif de l'acitivité contenu dans '$fileName'
-            $article->setImage($fileName);
-            $article->setAudio($mp3Name);
 
             // J'attribue la date de création et de modification à la date de l'instant + le lien de la vidéo
             $article->setCreerA(new \DateTime());
@@ -104,8 +105,8 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupération des données
-            $this -> manageArticleFile($article, $lastFileName, $form->get('file'), 'image');
-            $this -> manageArticleFile($article, $lastFileName, $form->get('mp3'), 'audio');
+            $this->manageArticleFile($article, $lastFileName, $form->get('file'), 'image');
+            $this->manageArticleFile($article, $lastFileName, $form->get('mp3'), 'audio');
 
 
             // Je modifier le champ 'modifier_a'
@@ -140,7 +141,7 @@ class ArticleController extends Controller
         $lastMp3Name = $article->getAudio();
 
         // Supprimer les anciens fichiers
-        $this->deleteFile($this->image_directory, $lastFileName);
+        $this->deleteFile($this->getImageDirectory(), $lastFileName);
         $this->deleteFile($this->getAudioDirectory(), $lastMp3Name);
 
         // Je supprime l'article de la base de donnée
@@ -337,9 +338,9 @@ class ArticleController extends Controller
      * @param File $file
      * @return string
      */
-    private function buildFileName(File $file)
+    private function buildFileName(File $file = null)
     {
-        return md5(uniqid()) . '.' . $file->guessExtension();
+        return $file ? md5(uniqid()) . '.' . $file->guessExtension() : null;
 
     }
 
@@ -355,11 +356,13 @@ class ArticleController extends Controller
         }
     }
 
-    private function getAudioDirectory(){
-        return $this->getParameter('audio_directory()');
+    private function getAudioDirectory()
+    {
+        return $this->getParameter('audio_directory');
     }
 
-    private function getImageDirectory(){
+    private function getImageDirectory()
+    {
         return $this->getParameter('article_directory');
     }
 
@@ -389,7 +392,6 @@ class ArticleController extends Controller
             );
         }
     }
-
 
 
 }
