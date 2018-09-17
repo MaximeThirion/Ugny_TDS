@@ -15,17 +15,6 @@ Encore
     // the following line enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-    // uncomment to define the assets of the project
-    .addStyleEntry('css/index', './assets/css/index.sass')
-    .addStyleEntry('css/planning', './assets/css/planning.sass')
-    .addStyleEntry('css/article_accueil', './assets/css/article_accueil.sass')
-    .addStyleEntry('css/lecteur_mp3', './assets/css/lecteur_mp3.css')
-    .addStyleEntry('css/article_page', './assets/css/article_page.css')
-    .addStyleEntry('css/ckeditor', './assets/css/ckeditor.css')
-    .addStyleEntry('css/bootstrap', './assets/css/bootstrap.min.css')
-    .addEntry('js/lecteur_mp3', './assets/js/lecteur_mp3.js')
-    .addEntry('js/bootstrap', './assets/js/bootstrap.bundle.min.js')
-
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
@@ -34,34 +23,6 @@ Encore
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     .autoProvidejQuery()
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/upload/avatar', to: 'upload/avatar' }
-    ]))
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/article/image', to: 'article/image' }
-    ]))
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/article/audio', to: 'article/audio' }
-    ]))
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/activite/image', to: 'activite/image' }
-    ]))
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/categorie/image', to: 'categorie/image' }
-    ]))
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/partenaire/image', to: 'partenaire/image' }
-    ]))
-
-    .addPlugin(new CopyWebpackPlugin([
-        { from: './assets/ckeditor', to: 'ckeditor' }
-    ]))
 ;
 
 module.exports = Encore.getWebpackConfig();

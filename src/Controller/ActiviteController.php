@@ -39,7 +39,7 @@ class ActiviteController extends Controller
 
             // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
             $file->move(
-                $this->getParameter('activite_directory'),
+                $this->getParameter('activite_directory_public'),
                 $fileName
             );
 
@@ -98,9 +98,8 @@ class ActiviteController extends Controller
             }
             else {
 
-                if (file_exists($this->getParameter('activite_directory').'/'.$lastFileName)) {
+                if (file_exists($this->getParameter('activite_directory_public').'/'.$lastFileName)) {
 
-                    unlink($this->getParameter('activite_directory').'/'.$lastFileName);
                     unlink($this->getParameter('activite_directory_public').'/'.$lastFileName);
                 }
 
@@ -108,7 +107,7 @@ class ActiviteController extends Controller
                 $activite->setImage($fileName);
 
                 $file->move(
-                    $this->getParameter('activite_directory'),
+                    $this->getParameter('activite_directory_public'),
                     $fileName
                 );
             }
@@ -137,9 +136,8 @@ class ActiviteController extends Controller
 
         $lastFileName = $activite->getImage();
 
-        if (file_exists($this->getParameter('activite_directory').'/'.$lastFileName)) {
+        if (file_exists($this->getParameter('activite_directory_public').'/'.$lastFileName)) {
 
-            unlink($this->getParameter('activite_directory').'/'.$lastFileName);
             unlink($this->getParameter('activite_directory_public').'/'.$lastFileName);
         }
 

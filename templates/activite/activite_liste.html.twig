@@ -24,7 +24,7 @@
                     <tr>
                         <td class="align-middle"><a href="{{ path('activite_page', {'id': activite.id}) }}">{{ activite.titre }}</a></td>
                         <td class="align-middle">{{ activite.soustitre }}</td>
-                        <td class="align-middle"><img class="rounded" src="{{ asset('build/activite/image/' ~ activite.image) }}" height="40px" width="40px"></td>
+                        <td class="align-middle"><img class="rounded" src="{{ asset('activite/image/' ~ activite.image) }}" height="40px" width="40px"></td>
                         <td class="align-middle">{{ activite.creera|date('d-m-Y H:i:s')}}</td>
                         <td class="align-middle">{{ activite.modifiera|date('d-m-Y H:i:s') }}</td>
                         <td class="align-middle"><a class="btn btn-primary" href="{{ path('activite_modifier', {'id': activite.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('activite_supprimer', {'id': activite.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>

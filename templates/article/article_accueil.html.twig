@@ -2,7 +2,7 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block css %}<link rel="stylesheet" href="{{ asset('build/css/article_accueil.css') }}">{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ asset('css/article_accueil.css') }}">{% endblock %}
 
 {% block body %}
     <section class="section_article">
@@ -12,7 +12,7 @@
                 <div class="row col-12 p-0 contenu_article">
                     {% for article in listeArticle %}
                         {% if article.afficher == true %}
-                            <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article" style="background-image: url({{ asset('build/article/image/' ~ article.image) }})">
+                            <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article" style="background-image: url({{ asset('article/image/' ~ article.image) }})">
                                 <div>
                                     <p class="align-middle">{{ article.titre }}</p>
                                 </div>
@@ -29,7 +29,7 @@
                         {% if compteur == false %}
                             <a href="{{ path('categorie_trier', {'id': categorie.id}) }}" class="col-12 categorie">
                                 <div class="row categorie_bloc">
-                                    <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
+                                    <img src="{{ asset('categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
                                     <div class="col-9 text-center">
                                         <h3 class="col-12">{{ categorie.label }} ({{ categorie.articles|length }})</h3>
                                         <p class="col-11">{{ categorie.description }}</p>
@@ -46,7 +46,7 @@
                                         <p class="col-10">{{ categorie.description }}</p>
                                         <button class="btn btn-primary bouton_gauche">ACCEDER</button>
                                     </div>
-                                    <img src="{{ asset('build/categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
+                                    <img src="{{ asset('categorie/image/' ~ categorie.image) }}" alt="" class="col-3">
                                 </div>
                             </a>
                             {% set compteur = false %}

@@ -50,7 +50,7 @@ class PartenaireController extends AbstractController
 
             // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
             $file->move(
-                $this->getParameter('partenaire_directory'),
+                $this->getParameter('partenaire_directory_public'),
                 $fileName
             );
 
@@ -106,9 +106,8 @@ class PartenaireController extends AbstractController
             }
             else {
 
-                if (file_exists($this->getParameter('partenaire_directory').'/'.$lastFileName)) {
+                if (file_exists($this->getParameter('partenaire_directory_public').'/'.$lastFileName)) {
 
-                    unlink($this->getParameter('partenaire_directory').'/'.$lastFileName);
                     unlink($this->getParameter('partenaire_directory_public').'/'.$lastFileName);
                 }
 
@@ -116,7 +115,7 @@ class PartenaireController extends AbstractController
                 $partenaire->setImage($fileName);
 
                 $file->move(
-                    $this->getParameter('partenaire_directory'),
+                    $this->getParameter('partenaire_directory_public'),
                     $fileName
                 );
             }
@@ -145,9 +144,8 @@ class PartenaireController extends AbstractController
 
         $lastFileName = $partenaire->getImage();
 
-        if (file_exists($this->getParameter('partenaire_directory').'/'.$lastFileName)) {
+        if (file_exists($this->getParameter('partenaire_directory_public').'/'.$lastFileName)) {
 
-            unlink($this->getParameter('partenaire_directory').'/'.$lastFileName);
             unlink($this->getParameter('partenaire_directory_public').'/'.$lastFileName);
         }
 

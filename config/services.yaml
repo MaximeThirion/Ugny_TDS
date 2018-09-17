@@ -5,18 +5,12 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
-    avatar_directory: '%kernel.project_dir%/assets/upload/avatar'
-    avatar_directory_public: '%kernel.project_dir%/public/build/upload/avatar'
-    article_directory: '%kernel.project_dir%/assets/article/image'
-    article_directory_public: '%kernel.project_dir%/public/build/article/image'
-    activite_directory: '%kernel.project_dir%/assets/activite/image'
-    activite_directory_public: '%kernel.project_dir%/public/build/activite/image'
-    audio_directory: '%kernel.project_dir%/assets/article/audio'
-    audio_directory_public: '%kernel.project_dir%/public/build/article/audio'
-    categorie_directory: '%kernel.project_dir%/assets/categorie/image'
-    categorie_directory_public: '%kernel.project_dir%/public/build/categorie/image'
-    partenaire_directory: '%kernel.project_dir%/assets/partenaire/image'
-    partenaire_directory_public: '%kernel.project_dir%/public/build/partenaire/image'
+    avatar_directory_public: '%kernel.project_dir%/public/upload/avatar'
+    article_directory_public: '%kernel.project_dir%/public/article/image'
+    activite_directory_public: '%kernel.project_dir%/public/activite/image'
+    audio_directory_public: '%kernel.project_dir%/public/article/audio'
+    categorie_directory_public: '%kernel.project_dir%/public/categorie/image'
+    partenaire_directory_public: '%kernel.project_dir%/public/partenaire/image'
 
 services:
     # default configuration for services in *this* file

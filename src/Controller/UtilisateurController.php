@@ -38,15 +38,14 @@ class UtilisateurController extends Controller
             }
             else {
 
-                if (file_exists($this->getParameter('avatar_directory').'/'.$lastFileName)) {
-                    unlink($this->getParameter('avatar_directory').'/'.$lastFileName);
+                if (file_exists($this->getParameter('avatar_directory_public').'/'.$lastFileName)) {
                     unlink($this->getParameter('avatar_directory_public').'/'.$lastFileName);
                 }
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $utilisateur->setAvatar($fileName);
 
                 $file->move(
-                    $this->getParameter('avatar_directory'),
+                    $this->getParameter('avatar_directory_public'),
                     $fileName
                 );
             }
@@ -77,8 +76,7 @@ class UtilisateurController extends Controller
 
         $lastFileName = $utilisateur->getAvatar();
 
-        if (file_exists($this->getParameter('avatar_directory').'/'.$lastFileName)) {
-            unlink($this->getParameter('avatar_directory').'/'.$lastFileName);
+        if (file_exists($this->getParameter('avatar_directory_public').'/'.$lastFileName)) {
             unlink($this->getParameter('avatar_directory_public').'/'.$lastFileName);
         }
 
@@ -168,15 +166,14 @@ class UtilisateurController extends Controller
             }
             else {
 
-                if (file_exists($this->getParameter('avatar_directory').'/'.$lastFileName)) {
-                    unlink($this->getParameter('avatar_directory').'/'.$lastFileName);
+                if (file_exists($this->getParameter('avatar_directory_public').'/'.$lastFileName)) {
                     unlink($this->getParameter('avatar_directory_public').'/'.$lastFileName);
                 }
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $utilisateur->setAvatar($fileName);
 
                 $file->move(
-                    $this->getParameter('avatar_directory'),
+                    $this->getParameter('avatar_directory_public'),
                     $fileName
                 );
             }

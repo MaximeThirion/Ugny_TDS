@@ -44,12 +44,12 @@ class ArticleController extends Controller
 
             // Je déplace le fichier uploadé dans le repertoire 'article_directory' et je lui donne le nom contenu par $fileName
             $file->move(
-                $this->getParameter('article_directory'),
+                $this->getParameter('article_directory_public'),
                 $fileName
             );
 
             $mp3->move(
-                $this->getParameter('audio_directory'),
+                $this->getParameter('audio_directory_public'),
                 $mp3Name
             );
 
@@ -111,39 +111,38 @@ class ArticleController extends Controller
                 // J'attribue l'image de l'article à l'ancien nom
                 $article->setImage($lastFileName);
             }
+            else {
+                // Si l'ancien nom existe déjà dans le repertoire
+                if (file_exists($this->getParameter('article_directory_public') . '/' . $lastFileName)) {
+                    // Alors on les supprime
+                    unlink($this->getParameter('article_directory_public') . '/' . $lastFileName);
+                }
 
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $article->setImage($fileName);
+
+                // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
+                $file->move(
+                    $this->getParameter('article_directory_public'),
+                    $fileName
+                );
+            }
             if ($form->get('mp3')->getData() === null) {
                 // J'attribue l'image de l'article à l'ancien nom
                 $article->setAudio($lastMp3Name);
             }
             // sinon
             else {
-                // Si l'ancien nom existe déjà dans le repertoire
-                if (file_exists($this->getParameter('article_directory').'/'.$lastFileName)) {
+                if (file_exists($this->getParameter('audio_directory_public').'/'.$lastMp3Name)) {
                     // Alors on les supprime
-                    unlink($this->getParameter('article_directory').'/'.$lastFileName);
-                    unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
-                }
-                if (file_exists($this->getParameter('audio_directory').'/'.$lastMp3Name)) {
-                    // Alors on les supprime
-                    unlink($this->getParameter('audio_directory').'/'.$lastMp3Name);
                     unlink($this->getParameter('audio_directory_public').'/'.$lastMp3Name);
                 }
                 // Je génère un nom unique et j'y concat' l'extension d'origine du fichier uploadé
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                $article->setImage($fileName);
-
                 $mp3Name = md5(uniqid()) . '.' . $mp3->guessExtension();
                 $article->setAudio($mp3Name);
 
-                // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
-                $file->move(
-                    $this->getParameter('article_directory'),
-                    $fileName
-                );
-
                 $mp3->move(
-                    $this->getParameter('audio_directory'),
+                    $this->getParameter('audio_directory_public'),
                     $mp3Name
                 );
             }
@@ -181,15 +180,13 @@ class ArticleController extends Controller
         $lastMp3Name = $article->getAudio();
 
         // Si l'ancien nom existe déjà dans le repertoire
-        if (file_exists($this->getParameter('article_directory').'/'.$lastFileName)) {
+        if (file_exists($this->getParameter('article_directory_public').'/'.$lastFileName)) {
             // alors supprimes du directory
-            unlink($this->getParameter('article_directory').'/'.$lastFileName);
             unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
         }
 
-        if (file_exists($this->getParameter('audio_directory').'/'.$lastMp3Name)) {
+        if (file_exists($this->getParameter('audio_directory_public').'/'.$lastMp3Name)) {
             // Alors on les supprime
-            unlink($this->getParameter('audio_directory').'/'.$lastMp3Name);
             unlink($this->getParameter('audio_directory_public').'/'.$lastMp3Name);
         }
         // Je supprime l'article de la base de donnée

@@ -3,10 +3,10 @@
 {% block title %}{{ article.titre }}{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{ asset('build/css/article_page.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/css/lecteur_mp3.css') }}" />
-    <link rel="stylesheet" href="{{ asset('build/css/ckeditor.css') }}">
-    <script src="{{ asset('build/js/lecteur_mp3.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/article_page.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lecteur_mp3.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/ckeditor.css') }}">
+    <script src="{{ asset('js/lecteur_mp3.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -30,13 +30,13 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="d-block w-100" src="{{ asset('build/article/image/' ~ article.image) }}" alt="First slide">
+                            <img class="d-block w-100" src="{{ asset('article/image/' ~ article.image) }}" alt="First slide">
                         </div>
                         {#{% set premier = true %}#}
 
                         {#{% for image in article.images %}#}
                         {#<div class="carousel-item {{ premier ? ' active' : '' }}">#}
-                        {#<img class="d-block w-100" src="{{ asset('build/article/image/' ~ image.url) }}" alt="">#}
+                        {#<img class="d-block w-100" src="{{ asset('article/image/' ~ image.url) }}" alt="">#}
                         {#</div>#}
                         {#{% set premier = false %}#}
                         {#{% endfor %}#}
@@ -53,7 +53,7 @@
                 <div class="col-3"></div>
             </div>
             <audio id="audiotrack" preload="auto">
-                <source src="{{ asset('build/article/audio/' ~ article.audio) }}">
+                <source src="{{ asset('article/audio/' ~ article.audio) }}">
             </audio>
             <div class="wrapper">
                 <div id="player">
@@ -93,7 +93,7 @@
                                 {% for commentaire in article.commentaires %}
                                     <tr>
                                         <td>
-                                            <img src="{{ asset('build/upload/avatar/' ~ commentaire.auteur.avatar) }}" class="pt-4 pr-4 pb-4 pl-4 m-auto avatar" alt="">
+                                            <img src="{{ asset('upload/avatar/' ~ commentaire.auteur.avatar) }}" class="pt-4 pr-4 pb-4 pl-4 m-auto avatar" alt="">
                                         </td>
                                         <td class="col-12 pt-4 pb-5 commentaire">
                                             <h5 class="mb-4">{{ commentaire.auteur }}</h5>

@@ -54,7 +54,7 @@ class CategorieController extends Controller
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
             $file->move(
-                $this->getParameter('categorie_directory'),
+                $this->getParameter('categorie_directory_public'),
                 $fileName
             );
 
