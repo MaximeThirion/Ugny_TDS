@@ -4,7 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ asset('css/article_page.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/lecteur_mp3.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/lecteur_mp3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ckeditor.css') }}">
     <script src="{{ asset('js/lecteur_mp3.js') }}"></script>
 {% endblock %}
@@ -100,9 +100,9 @@
                                             <p>{{ commentaire.message|raw }}</p>
                                             <small class="m-0 p-0"><i>Le {{ commentaire.creera|date('d-m-Y à H:i:s') }}</i></small>
                                             {% if commentaire.auteur == app.user %}
-                                                <a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a>
+                                                <a class="btn btn-danger bouton_commentaire" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a>
                                             {% elseif is_granted('ROLE_ADMIN') %}
-                                                <a class="btn btn-danger" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a>
+                                                <a class="btn btn-danger bouton_commentaire" href="{{ path('commentaire_supprimer', {'id': commentaire.id, 'idarticle': article.id}) }}">Supprimer</a>
                                             {% endif %}
                                         </td>
                                     </tr>
