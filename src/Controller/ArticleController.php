@@ -216,6 +216,8 @@ class ArticleController extends Controller
                 // alors supprimes du directory
                 unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
             }
+
+            $article->removeImage($image);
         }
 
         $lastMp3Name = $article->getAudio();
