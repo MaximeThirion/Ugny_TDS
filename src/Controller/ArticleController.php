@@ -133,9 +133,9 @@ class ArticleController extends Controller
                     if (file_exists($this->getParameter('article_directory_public').'/'.$lastFileName)) {
                         // alors supprimes du directory
                         unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
-                    }
 
-                    $article->removeImage($image);
+                        $article->removeImage($image);
+                    }
                 }
 
                 foreach ($images as $fichier) {
@@ -215,9 +215,9 @@ class ArticleController extends Controller
             if (file_exists($this->getParameter('article_directory_public').'/'.$lastFileName)) {
                 // alors supprimes du directory
                 unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
-            }
 
-            $article->removeImage($image);
+                $article->removeImage($image);
+            }
         }
 
         $lastMp3Name = $article->getAudio();
