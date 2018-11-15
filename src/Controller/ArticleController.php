@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Entity\Commentaire;
+use App\Entity\Image;
 use App\Form\ArticleType;
 use App\Form\CommentaireType;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,30 +32,40 @@ class ArticleController extends Controller
         // Si le formulaire est soumit et valide, alors
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // J'enregistre les données du formulaire dans la variable $article
             $article = $form->getData();
 
-            // J'enregistre les données de l'input 'file' du formulaire dans la variable $file
-            $file = $form->get('file')->getData();
+            $images = $form->get('images')->getData();
+
+            if ($images) {
+
+                foreach ($images as $fichier) {
+
+                    $image = new Image();
+
+                    $fileName = md5(uniqid()) . '.' . $fichier->guessExtension();
+
+                    $image->setUrl($fileName);
+
+                    $fichier->move(
+                        $this->getParameter('article_directory_public'),
+                        $fileName
+                    );
+
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($image);
+
+                    $article->addImage($image);
+                }
+            }
+
             $mp3 = $form->get('mp3')->getData();
-
-            // Je génère un nom unique et j'y concat' l'extension d'origine du fichier uploadé
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             $mp3Name = md5(uniqid()) . '.' . $mp3->guessExtension();
-
-            // Je déplace le fichier uploadé dans le repertoire 'article_directory' et je lui donne le nom contenu par $fileName
-            $file->move(
-                $this->getParameter('article_directory_public'),
-                $fileName
-            );
 
             $mp3->move(
                 $this->getParameter('audio_directory_public'),
                 $mp3Name
             );
 
-            // J'attribue le chemin relatif de l'acitivité contenu dans '$fileName'
-            $article->setImage($fileName);
             $article->setAudio($mp3Name);
 
             // J'attribue la date de création et de modification à la date de l'instant + le lien de la vidéo
@@ -92,7 +103,13 @@ class ArticleController extends Controller
         $article = $entityManager->getRepository(Article::class)->find($id);
 
         // J'enregistre l'ancien nom (au cas il existerait deja)
-        $lastFileName = $article->getImage();
+        $lastFileName = [];
+
+        foreach ($article->getImages() as $image) {
+
+            $lastFileName[] = $image->getUrl();
+        }
+
         $lastMp3Name = $article->getAudio();
 
         // J'instancie le formulaire avec ArticleType (form builder)
@@ -100,33 +117,47 @@ class ArticleController extends Controller
 
         // Je demande au formulaire de considérer la requete
         $form->handleRequest($request);
-        // J'enregistre les données de l'input 'file' du formulaire dans la variable $file
-        $file = $form->get('file')->getData();
+
+        $images = $form->get('images')->getData();
         $mp3 = $form->get('mp3')->getData();
 
         // Si le formulaire est soumit et valide, alors
         if ($form->isSubmitted() && $form->isValid()) {
-            // Si l'input fil est = NULL alors
-            if ($form->get('file')->getData() === null) {
-                // J'attribue l'image de l'article à l'ancien nom
-                $article->setImage($lastFileName);
-            }
-            else {
-                // Si l'ancien nom existe déjà dans le repertoire
-                if (file_exists($this->getParameter('article_directory_public') . '/' . $lastFileName)) {
-                    // Alors on les supprime
-                    unlink($this->getParameter('article_directory_public') . '/' . $lastFileName);
+
+            if ($images) {
+
+                foreach ($article->getImages() as $image) {
+
+                    $lastFileName = $image->getUrl();
+
+                    if (file_exists($this->getParameter('article_directory_public').'/'.$lastFileName)) {
+                        // alors supprimes du directory
+                        unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
+                    }
+
+                    $article->removeImage($image);
                 }
 
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                $article->setImage($fileName);
+                foreach ($images as $fichier) {
 
-                // Je déplace le fichier uploadé dans le repertoire 'activite_directory' et je lui donne le nom contenu par $fileName
-                $file->move(
-                    $this->getParameter('article_directory_public'),
-                    $fileName
-                );
+                    $image = new Image();
+
+                    $fileName = md5(uniqid()) . '.' . $fichier->guessExtension();
+
+                    $image->setUrl($fileName);
+
+                    $fichier->move(
+                        $this->getParameter('article_directory_public'),
+                        $fileName
+                    );
+
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($image);
+
+                    $article->addImage($image);
+                }
             }
+
             if ($form->get('mp3')->getData() === null) {
                 // J'attribue l'image de l'article à l'ancien nom
                 $article->setAudio($lastMp3Name);
@@ -176,14 +207,18 @@ class ArticleController extends Controller
         // Je vais chercher dans Repository l'article possedant cet id
         $article = $entityManager->getRepository(Article::class)->find($id);
         // J'enregistre l'ancien nom (au cas il existerait deja)
-        $lastFileName = $article->getImage();
-        $lastMp3Name = $article->getAudio();
 
-        // Si l'ancien nom existe déjà dans le repertoire
-        if (file_exists($this->getParameter('article_directory_public').'/'.$lastFileName)) {
-            // alors supprimes du directory
-            unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
+        foreach ($article->getImages() as $image) {
+
+            $lastFileName = $image->getUrl();
+
+            if (file_exists($this->getParameter('article_directory_public').'/'.$lastFileName)) {
+                // alors supprimes du directory
+                unlink($this->getParameter('article_directory_public').'/'.$lastFileName);
+            }
         }
+
+        $lastMp3Name = $article->getAudio();
 
         if (file_exists($this->getParameter('audio_directory_public').'/'.$lastMp3Name)) {
             // Alors on les supprime

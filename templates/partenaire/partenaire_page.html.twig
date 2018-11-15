@@ -2,6 +2,10 @@
 
 {% block title %}{{ partenaire.titre }}{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/ckeditor.css') }}">
+{% endblock %}
+
 {% block body %}
     <section class="container">
         <article>

@@ -35,12 +35,9 @@ class Article
     private $contenu;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "image/*" })
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", orphanRemoval=true)
      */
-    private $image;
-
-    private $file;
+    private $images;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -54,6 +51,11 @@ class Article
      * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", inversedBy="articles")
      */
     private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="article", orphanRemoval=true)
+     */
+    private $commentaires;
 
     /**
      * @ORM\Column(type="boolean")
@@ -70,15 +72,11 @@ class Article
      */
     private $modifier_a;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="article", orphanRemoval=true)
-     */
-    private $commentaires;
-
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId()
@@ -142,30 +140,6 @@ class Article
     public function setModifierA(?\DateTimeInterface $modifier_a): self
     {
         $this->modifier_a = $modifier_a;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getFile(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setFile(?string $file): self
-    {
-        $this->image = $file;
 
         return $this;
     }
@@ -264,6 +238,37 @@ class Article
             // set the owning side to null (unless already changed)
             if ($commentaire->getArticle() === $this) {
                 $commentaire->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getArticle() === $this) {
+                $image->setArticle(null);
             }
         }
 

@@ -46,4 +46,9 @@
   bottom: 35px;
   right: 5px; }
 
+.image {
+  width: auto;
+  height: 400px;
+  max-height: 400px; }
+
 /*# sourceMappingURL=article_page.css.map */

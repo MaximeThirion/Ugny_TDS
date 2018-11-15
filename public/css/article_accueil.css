@@ -46,8 +46,8 @@
     border: 1px solid #adadad; }
 
 .categorie:hover {
-  background-color: white;
-  box-shadow: 0 0 1.5em #929395; }
+  background-color: #f1f1f1;
+  box-shadow: 0 0 1em #f1f1f1; }
 
 .categorie_bloc {
   padding: 0 15px 0 15px;

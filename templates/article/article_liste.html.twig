@@ -26,7 +26,17 @@
                     <tr>
                         <td class="align-middle"><a href="{{ path('article_page', {'id': article.id}) }}">{{ article.titre }}</a></td>
                         <td class="align-middle">{{ article.soustitre }}</td>
-                        <td class="align-middle"><img class="rounded" src="{{ asset('article/image/' ~ article.image) }}" height="40px" width="40px"></td>
+                        <td id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 50px">
+                            <div class="carousel-inner">
+                                {% set premier = true %}
+                                {% for image in article.images %}
+                                    <div class="carousel-item {{ premier ? ' active' : '' }}">
+                                        <img class="d-block m-auto" src="{{ asset('article/image/' ~ image.url) }}" style="height: 50px; width: 50px;" alt="">
+                                    </div>
+                                    {% set premier = false %}
+                                {% endfor %}
+                            </div>
+                        </td>
                         <td class="align-middle">
                             {% for categorie in article.categories %}
                                 <li>{{ categorie.label }}</li>

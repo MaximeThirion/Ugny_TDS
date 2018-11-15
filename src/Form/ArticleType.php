@@ -17,9 +17,14 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre')
             ->add('sous_titre')
-            ->add('contenu', TextareaType::class, array('attr' => array('id' => 'editor test')))
-            ->add('file', FileType::class, array('label' => 'Image', 'required' => false, 'data_class' => null))
-            ->add('mp3', FileType::class, array('label' => 'Version audio', 'required' => false, 'data_class' => null))
+            ->add('contenu', TextareaType::class, array(
+                'attr' => array(
+                    'id' => 'editor test')))
+            ->add('images', FileType::class, array(
+                'multiple' => true, 'data_class' => null, 'mapped' => false, 'required' => false, 'attr' => array(
+                    'accept' => 'image/*', 'multiple' => 'multiple')))
+            ->add('mp3', FileType::class, array(
+                'label' => 'Version audio', 'required' => false, 'data_class' => null))
             ->add('categories')
         ;
     }

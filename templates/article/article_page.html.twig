@@ -4,9 +4,9 @@
 
 {% block css %}
     <link rel="stylesheet" href="{{ asset('css/article_page.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/lecteur_mp3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ckeditor.css') }}">
-    <script src="{{ asset('js/lecteur_mp3.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.9/mediaelement-and-player.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.9/mediaelementplayer.min.css">
 {% endblock %}
 
 {% block body %}
@@ -24,22 +24,22 @@
                 <div class="col-3"></div>
                 <div id="carouselExampleIndicators" class="carousel slide col-6" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        {#<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>#}
-                        {#<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>#}
+                        {% set premierslide = true %}
+                        {% set numeroslide = 0 %}
+                        {% for image in article.images %}
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ numeroslide }}" class="{{ premierslide ? ' active' : '' }}"></li>
+                            {% set premierslide = false %}
+                            {% set numeroslide = numeroslide + 1 %}
+                        {% endfor %}
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="{{ asset('article/image/' ~ article.image) }}" alt="First slide">
-                        </div>
-                        {#{% set premier = true %}#}
-
-                        {#{% for image in article.images %}#}
-                        {#<div class="carousel-item {{ premier ? ' active' : '' }}">#}
-                        {#<img class="d-block w-100" src="{{ asset('article/image/' ~ image.url) }}" alt="">#}
-                        {#</div>#}
-                        {#{% set premier = false %}#}
-                        {#{% endfor %}#}
+                        {% set premier = true %}
+                        {% for image in article.images %}
+                            <div class="carousel-item {{ premier ? ' active' : '' }}">
+                                <img class="d-block w-100 image" src="{{ asset('article/image/' ~ image.url) }}" alt="">
+                            </div>
+                            {% set premier = false %}
+                        {% endfor %}
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -52,23 +52,9 @@
                 </div>
                 <div class="col-3"></div>
             </div>
-            <audio id="audiotrack" preload="auto">
-                <source src="{{ asset('article/audio/' ~ article.audio) }}">
-            </audio>
-            <div class="wrapper">
-                <div id="player">
-                    <div id="track">
-                        <div id="progress"></div>
-                    </div>
-                    <div id="controls">
-                        <div class="icon" id="play"></div>
-                        <div class="icon" id="pause"></div>
-                        <div class="icon" id="stop"></div>
-                        <div class="icon" id="mute"></div>
-                        <div id="volume">
-                            <div id="level"></div>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-8 mt-4 mb-3 ml-auto mr-auto">
+                    <audio style="width: 100%" src="{{ asset('article/audio/' ~ article.audio) }}"></audio>
                 </div>
             </div>
             <div class="tableau_commentaire">
@@ -124,6 +110,16 @@
                 { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align'], items: [ 'NumberedList', 'BulletedList', 'Blockquote'] },
                 { name: 'insert', items: [ 'Smiley', 'SpecialChar' ] }
             ]
+        });
+    </script>
+    <script>
+        $('video, audio').mediaelementplayer({
+            // Do not forget to put a final slash (/)
+            pluginPath: 'https://cdnjs.com/libraries/mediaelement/',
+            // this will allow the CDN to use Flash without restrictions
+            // (by default, this is set as `sameDomain`)
+            shimScriptAccess: 'always'
+            // more configuration
         });
     </script>
 {% endblock %}
