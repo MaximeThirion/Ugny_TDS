@@ -12,11 +12,17 @@
                 <div class="row col-12 p-0 contenu_article">
                     {% for article in listeArticle %}
                         {% if article.afficher == true %}
-                            <a href="{{ path('article_page', {'id': article.id}) }}" class="col-3 article" style="background-image: url({{ asset('article/image/' ~ article.image) }})">
-                                <div>
-                                    <p class="align-middle">{{ article.titre }}</p>
+                            <div id="carouselExampleIndicators" class="carousel slide col-3 p-0" data-ride="carousel">
+                                <div class="carousel-inner article">
+                                    {% set premier = true %}
+                                    {% for image in article.images %}
+                                        <a href="{{ path('article_page', {'id': article.id}) }}" class="carousel-item {{ premier ? ' active' : '' }}" style="background-image: url({{ asset('article/image/' ~ image.url) }})">
+                                            <p class="align-middle">{{ article.titre }}</p>
+                                        </a>
+                                        {% set premier = false %}
+                                    {% endfor %}
                                 </div>
-                            </a>
+                            </div>
                         {% endif %}
                     {% endfor %}
                 </div>
