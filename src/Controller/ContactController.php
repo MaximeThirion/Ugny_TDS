@@ -22,7 +22,7 @@ class ContactController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $message = (new \Swift_Message())
-                ->setFrom(array($form->get('email')->getData() => $form->get('email')->getData()))
+                ->setFrom($form->get('email')->getData())
                 ->setTo('adminugny@yopmail.com')
                 ->setSubject($form->get('sujet')->getData())
                 ->setBody(
