@@ -39,7 +39,9 @@ class UtilisateurController extends Controller
             else {
 
                 if (file_exists($this->getParameter('avatar_directory_public').'/'.$lastFileName)) {
-                    unlink($this->getParameter('avatar_directory_public').'/'.$lastFileName);
+                    if ($lastFileName !== 'avatar.png') {
+                        unlink($this->getParameter('avatar_directory_public') . '/' . $lastFileName);
+                    }
                 }
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $utilisateur->setAvatar($fileName);
@@ -77,7 +79,9 @@ class UtilisateurController extends Controller
         $lastFileName = $utilisateur->getAvatar();
 
         if (file_exists($this->getParameter('avatar_directory_public').'/'.$lastFileName)) {
-            unlink($this->getParameter('avatar_directory_public').'/'.$lastFileName);
+            if ($lastFileName !== 'avatar.png') {
+                unlink($this->getParameter('avatar_directory_public') . '/' . $lastFileName);
+            }
         }
 
         $entityManager->remove($utilisateur);
@@ -167,7 +171,9 @@ class UtilisateurController extends Controller
             else {
 
                 if (file_exists($this->getParameter('avatar_directory_public').'/'.$lastFileName)) {
-                    unlink($this->getParameter('avatar_directory_public').'/'.$lastFileName);
+                    if ($lastFileName !== 'avatar.png') {
+                        unlink($this->getParameter('avatar_directory_public') . '/' . $lastFileName);
+                    }
                 }
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $utilisateur->setAvatar($fileName);

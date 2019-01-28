@@ -399,10 +399,21 @@ class ArticleController extends Controller
         // Retrouve le commentaire par son id
         $commentaire = $entityManager->getRepository(Commentaire::class)->find($id);
 
-        // Supprime le commentaire de la base de donnée
-        $entityManager->remove($commentaire);
-        // Execute la requete
-        $entityManager->flush();
+        if ($this->getUser() == $commentaire->getAuteur() || $this->getUser() == $this->isGranted('ROLE_ADMIN')) {
+            $entityManager->remove($commentaire);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'notification',
+                'Votre commentaire a bien été supprimé'
+            );
+        }
+        else {
+            $this->addFlash(
+                'notification',
+                'Vous ne disposez pas des droits requis pour supprimer ce commentaire'
+            );
+        }
 
         // Redirection sur la page d'un article par son id
         return $this->redirectToRoute('article_page', ['id' => $idarticle]);

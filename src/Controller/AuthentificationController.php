@@ -52,7 +52,7 @@ class AuthentificationController extends Controller
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
                 $file->move(
-                    $this->getParameter('avatar_directory'),
+                    $this->getParameter('avatar_directory_public'),
                     $fileName
                 );
                 $utilisateur->setAvatar($fileName);
@@ -61,7 +61,7 @@ class AuthentificationController extends Controller
             $utilisateur->setCreerA(new \DateTime());
             $utilisateur->setModifierA(new \DateTime());
 
-            $utilisateur->setRoles(['ROLE_ADMIN']);
+//            $utilisateur->setRoles(['ROLE_ADMIN']);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($utilisateur);
