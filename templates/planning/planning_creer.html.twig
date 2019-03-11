@@ -2,6 +2,12 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+{% endblock %}
+
 {% block body %}
     <section class="container">
         <article>
@@ -13,4 +19,17 @@
             {{ form_end(form) }}
         </article>
     </section>
+    <script>
+        $("#planning_date").flatpickr(
+            {
+                "locale": "fr",
+                enableTime: true,
+                altInput: true,
+                time_24hr: true,
+                altFormat: "Le l j F Y à H:i",
+                dateFormat: "d-m-Y H:i",
+                minDate: "today"
+            }
+        );
+    </script>
 {% endblock %}

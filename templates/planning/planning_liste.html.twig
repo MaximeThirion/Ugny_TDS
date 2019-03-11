@@ -24,19 +24,19 @@
                     <tr>
                         <td class="align-middle">
                             {% if  planning.date|date('w') == '0' %}
-                                Dimanche <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Dimanche <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% elseif planning.date|date('w') == '1' %}
-                                Lundi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Lundi <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% elseif planning.date|date('w') == '2' %}
-                                Mardi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Mardi <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% elseif planning.date|date('w') == '3' %}
-                                Mercredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Mercredi <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% elseif planning.date|date('w') == '4' %}
-                                Jeudi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Jeudi <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% elseif planning.date|date('w') == '5' %}
-                                Vendredi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Vendredi <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% elseif planning.date|date('w') == '6' %}
-                                Samedi <small>à {{ planning.date|date('d-m-Y H:i') }}</small>
+                                Samedi <small>{{ planning.date|date('d/m/Y à H:i') }}</small>
                             {% endif %}
                         </td>
                         <td class="align-middle">{{ planning.utilisateurs|length }}</td>
@@ -49,8 +49,8 @@
                         </td>
 
                         <td class="align-middle">{{ planning.activite }}</td>
-                        <td class="align-middle">{{ planning.creera|date('d-m-Y H:i:s')}}</td>
-                        <td class="align-middle">{{ planning.modifiera|date('d-m-Y H:i:s') }}</td>
+                        <td class="align-middle">{{ planning.creera|date('d/m/Y à H:i')}}</td>
+                        <td class="align-middle">{{ planning.modifiera|date('d/m/Y à H:i') }}</td>
                         <td class="align-middle"><a class="btn btn-primary" href="{{ path('planning_modifier', {'id': planning.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('planning_supprimer', {'id': planning.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>
                     </tr>
                 {% endfor %}

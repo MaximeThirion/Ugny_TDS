@@ -14,7 +14,12 @@ class InformationType extends AbstractType
     {
         $builder
             ->add('message')
-            ->add('expire_a', DateTimeType::class, array('widget' => 'single_text', 'date_format' => 'dd-MM-yyyy H:i'))
+            ->add('expire_a', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'label' => 'Expire',
+                'date_format' => 'dd-MM-yyyy H:i',
+                'attr' => array(
+                    'html5' => false)))
         ;
     }
 

@@ -14,7 +14,11 @@ class PlanningType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateTimeType::class, array('widget' => 'single_text', 'date_format' => 'dd-MM-yyyy H:i'))
+            ->add('date', DateTimeType::class, array(
+                'widget' => 'single_text',
+                'date_format' => 'dd-MM-yyyy H:i',
+                'attr' => array(
+                    'html5' => false)))
             ->add('activite')
         ;
     }

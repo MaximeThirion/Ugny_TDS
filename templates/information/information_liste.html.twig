@@ -14,7 +14,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Message</th>
                     <th scope="col">Expire à</th>
-                    <th scope="col">Edit</th>
+                    <th scope="col">Editer</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,7 +22,7 @@
                     <tr>
                         <td class="align-middle">{{ information.id }}</td>
                         <td class="align-middle">{{ information.message }}</td>
-                        <td class="align-middle">{{ information.expirea|date('d-m-Y H:i:s')}}</td>
+                        <td class="align-middle">{{ information.expirea|date('d/m/Y à H:i')}}</td>
                         <td class="align-middle"><a class="btn btn-primary" href="{{ path('information_modifier', {'id': information.id}) }}"><i class="far fa-edit"></i> Editer</a> <a class="btn btn-danger" href="{{ path('information_supprimer', {'id': information.id}) }}"><i class="far fa-trash-alt"></i> Supprimer</a></td>
                     </tr>
                 {% endfor %}
