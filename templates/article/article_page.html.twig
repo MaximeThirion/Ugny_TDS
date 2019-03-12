@@ -13,14 +13,20 @@
     {% if article.afficher == true %}
     <section class="container">
         <article>
-            <div class="row">
-                <a href="{{ path('article') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Retour aux articles</a>
+            <div class="row col-12 ml-0">
+                <a href="{{ path('article') }}" class="btn btn-primary col-2"><i class="fas fa-arrow-left"></i> Retour aux articles</a>
+                <p class="col-10 text-right my-auto pr-0">Catégorie :
+                {% set premierecategorie = true %}
+                {% for categorie in article.categories %}
+                    {{ premierecategorie ? '' : ' / ' }}<a href="{{ path('categorie_trier', {'id': categorie.id}) }}">{{ categorie.label }}</a>
+                    {% set premierecategorie = false %}
+                {% endfor %}
+                </p>
             </div>
-            {% for categorie in article.categories %}
-                <a href="{{ path('categorie_trier', {'id': categorie.id}) }}">{{ categorie.label }}</a>
-            {% endfor %}
-            {{ article.contenu|raw }}
-            <div class="row">
+            <div class="col-12 mt-4 mb-4">
+                {{ article.contenu|raw }}
+            </div>
+            <div class="row col-12 mb-4">
                 <div class="col-3"></div>
                 <div id="carouselExampleIndicators" class="carousel slide col-6" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -52,13 +58,13 @@
                 </div>
                 <div class="col-3"></div>
             </div>
-            <div class="row">
-                <div class="col-8 mt-4 mb-3 ml-auto mr-auto">
+            <div class="row col-12 mb-4">
+                <div class="col-8 mt-3 mb-3 ml-auto mr-auto">
                     <audio style="width: 100%" src="{{ asset('article/audio/' ~ article.audio) }}"></audio>
                 </div>
             </div>
-            <div class="tableau_commentaire">
-                <h3>Les commentaires</h3>
+            <div class="tableau_commentaire col-12 pt-2">
+                <h3 class="mt-4 mb-4">Les commentaires</h3>
                 <table class="col-12">
                     <tr>
                         <td class="pt-5 pb-5 fond_commentaire">

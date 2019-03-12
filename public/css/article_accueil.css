@@ -1,8 +1,9 @@
-.contenu {
-  margin-top: 50px; }
-  .contenu h2 {
-    margin: 20px 0 20px 0;
-    padding-left: 15px; }
+.contenu h2 {
+  margin: 20px 0 20px 0;
+  padding-left: 15px; }
+
+.contenu_categorie {
+  margin-top: 58px; }
 
 .article {
   height: 250px;

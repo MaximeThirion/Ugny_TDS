@@ -1,12 +1,16 @@
 .tableau_commentaire table {
-  border: 2px solid #929395;
-  box-sizing: border-box; }
+  border: 0 solid #929395;
+  box-sizing: border-box;
+  border-collapse: separate;
+  border-spacing: 0;
+  padding: 0; }
   .tableau_commentaire table table {
-    border: 1px solid #929395;
-    box-sizing: border-box; }
-.tableau_commentaire td {
-  position: relative;
-  border: 1px solid #929395; }
+    border: 0;
+    box-sizing: border-box;
+    border-collapse: collapse; }
+    .tableau_commentaire table table td {
+      position: relative;
+      border: 1px solid #929395; }
 
 .bouton_commentaire {
   position: absolute;
