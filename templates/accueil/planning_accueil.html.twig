@@ -29,7 +29,7 @@
                     </h1>
                     <h1><a href="{{ path('activite_page', {'id': evenement.activite.id}) }}">{{ evenement.activite.titre }}</a></h1>
                     <p>{{ evenement.activite.soustitre }}</p>
-                    <p>{{ evenement.date|date('d-m-Y H:i') }}</p>
+                    <p>Le {{ evenement.date|date('d/m/Y à H:i') }}</p>
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
